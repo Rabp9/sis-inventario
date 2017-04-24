@@ -1,0 +1,27 @@
+<div class="alert alert-dismissible" ng-class="{'alert-success': message.type === 'success', 'alert-danger': message.type === 'error'}" role="alert" ng-show="message.type !== undefined">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      {{ message.text }} 
+</div>
+<h2>Marcas</h2>
+<hr>
+<div class="row">
+    <button type="button" class="btn btn-primary" ng-click="showMarcasAdd()"><span class="glyphicon glyphicon-plus"></span> Nueva Marca</button>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Descripción</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-class="{'danger': marca.estado_id == 2}" ng-repeat="marca in marcas">
+                    <td>{{ marca.id }}</td>
+                    <td>{{ marca.descripcion }}</td>
+                    <td><button type="button" class="btn btn-primary btn-sm" ng-click="showMarcasEdit(marca)"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

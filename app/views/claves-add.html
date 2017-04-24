@@ -1,0 +1,24 @@
+<form ng-submit="saveClave(clave, 'btnSaveClave')">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()" data-dismiss="modal" aria-hidden="true"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Nueva Clave</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="txtSoftware">Software</label>
+                    <input id="txtSoftware" class="form-control" type="text" ng-model="clave.software" />
+                </div>
+                <div class="form-group">
+                    <label for="txtClave">Clave</label>
+                    <input id="txtClave" class="form-control" type="text" ng-model="clave.clave" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="cancel()">Cerrar</button>
+        <button id="btnSaveClave" class="btn btn-success" type="submit">Guardar Clave</button>
+    </div>
+</form>
