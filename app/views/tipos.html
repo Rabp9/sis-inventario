@@ -1,1 +1,29 @@
-<p>This is the tipos view.</p>
+<div class="alert alert-dismissible" ng-class="{'alert-success': message.type === 'success', 'alert-danger': message.type === 'error'}" role="alert" ng-show="message.type !== undefined">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      {{ message.text }} 
+</div>
+<h2>Tipos</h2>
+<hr>
+<div class="row">
+    <button type="button" class="btn btn-primary" ng-click="showTiposAdd()"><span class="glyphicon glyphicon-plus"></span> Nueva Tipo</button>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Descripción</th>
+                    <th>Naturaleza</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-class="{'danger': tipo.estado_id == 2}" ng-repeat="tipo in tipos">
+                    <td>{{ tipo.id }}</td>
+                    <td>{{ tipo.descripcion }}</td>
+                    <td>{{ tipo.naturaleza }}</td>
+                    <td><button type="button" class="btn btn-primary btn-sm" ng-click="showTiposEdit(tipo)"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
