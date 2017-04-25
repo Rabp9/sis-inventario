@@ -12,7 +12,7 @@ angular.module('sisInventarioFrontendApp')
     MarcasService.get(function(data) {
         $scope.marcas = data.marcas;
     });
-    
+        
     $scope.showMarcasAdd = function() {
         var modalInstanceAdd = $uibModal.open({
             templateUrl: 'views/marcas-add.html',
