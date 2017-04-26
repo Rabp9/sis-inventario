@@ -16,7 +16,8 @@ angular
     'ngSanitize',
     'ngTouch',
     'ui.router',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'ui.sortable'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
     var mainState = {
