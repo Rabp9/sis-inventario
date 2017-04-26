@@ -29,13 +29,13 @@ angular
         title: 'Inicio'
     };
     
-    var clavesState = {
-        name: 'claves',
-        url: '/claves',
-        templateUrl: 'views/claves.html',
-        controller: 'ClavesCtrl',
-        controllerAs: 'claves',
-        title: 'Claves'
+    var credencialesState = {
+        name: 'credenciales',
+        url: '/credenciales',
+        templateUrl: 'views/credenciales.html',
+        controller: 'CredencialesCtrl',
+        controllerAs: 'credenciales',
+        title: 'Credenciales'
     };
     
     var marcasState = {
@@ -57,7 +57,7 @@ angular
     };
     
     $stateProvider.state(mainState);
-    $stateProvider.state(clavesState);
+    $stateProvider.state(credencialesState);
     $stateProvider.state(marcasState);
     $stateProvider.state(tiposState);
 })

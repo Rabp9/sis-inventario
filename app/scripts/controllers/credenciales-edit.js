@@ -2,24 +2,24 @@
 
 /**
  * @ngdoc function
- * @name sisInventarioFrontendApp.controller:ClavesAddCtrl
+ * @name sisInventarioFrontendApp.controller:CredencialesEditCtrl
  * @description
- * # ClavesAddCtrl
+ * # CredencialesEditCtrl
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-.controller('ClavesAddCtrl', function ($scope, $uibModalInstance, ClavesService) {
-    $scope.clave = {};
+.controller('CredencialesEditCtrl', function ($scope, credencial, $uibModalInstance, CredencialesService) {
+    $scope.credencial = $.extend(true, {}, credencial);
     
     $scope.cancel = function() {
         $uibModalInstance.dismiss('cancel');
     };
 
-    $scope.saveClave = function(clave, boton) {
+    $scope.saveCredencial = function(credencial, boton) {
         $('#' + boton).addClass('disabled');
         $('#' + boton).prop('disabled', true);
         
-        ClavesService.save(clave, function(data) {
+        CredencialesService.save(credencial, function(data) {
             $('#' + boton).removeClass('disabled');
             $('#' + boton).prop('disabled', false);
             $uibModalInstance.close(data);

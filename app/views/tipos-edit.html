@@ -10,9 +10,30 @@
         </div>
         <div class="form-group">
             <label for="sltNaturaleza">Naturaleza</label>
-            <select id="sltNaturaleza" class="form-control">
-                <option value="">Selecciona una</option>
+            <select id="sltNaturaleza" class="form-control" required
+                ng-options="option for option in ['Software', 'Hardware']" ng-model="tipo.naturaleza">
+                <option value="">Selecciona uno</option>
             </select>
+        </div>
+        <div class="form-group">
+            <label for="txtDato">Dato nuevo</label>
+            <div class="input-group">
+                <input id="txtDato" class="form-control" type="text" ng-model="dato_nuevo_descripcion" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" ng-click="addDato(dato_nuevo_descripcion)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </span>
+            </div>
+            <div ui-sortable ng-model="tipo.datos">
+                <p class="input-group" ng-repeat="dato in tipo.datos" 
+                   style="padding: 5px 10px; cursor: move;" ng-if="dato.estado_id === 1">
+                    <input type="text" class="form-control" ng-model="dato.descripcion" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" ng-click="removeDato(dato)">X</button>
+                    </span>
+                </p>
+            </div>
         </div>
     </div>
     <div class="modal-footer">

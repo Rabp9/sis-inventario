@@ -1,0 +1,24 @@
+<form ng-submit="saveCredencial(credencial, 'btnSaveCredencial')">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()" data-dismiss="modal" aria-hidden="true"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Nueva Credencial</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="txtSoftware">Software</label>
+            <input id="txtSoftware" class="form-control" type="text" ng-model="credencial.software" />
+        </div>
+        <div class="form-group">
+            <label for="txtUsername">Username</label>
+            <input id="txtUsername" class="form-control" type="text" ng-model="credencial.username" />
+        </div>
+        <div class="form-group">
+            <label for="txtPassword">Password</label>
+            <input id="txtPassword" class="form-control" type="text" ng-model="credencial.password" />
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="cancel()">Cerrar</button>
+        <button id="btnSaveCredencial" class="btn btn-success" type="submit">Guardar Clave</button>
+    </div>
+</form>

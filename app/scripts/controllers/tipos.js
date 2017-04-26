@@ -39,7 +39,10 @@ angular.module('sisInventarioFrontendApp')
             }
         });
            
-        modalInstanceEdit.result.then(function (data) {
+        modalInstanceEdit.result.then(function (data) {  
+            TiposService.get(function(data) {
+                $scope.tipos = data.tipos;
+            });
             $scope.message = data.message;
         });
     };
