@@ -56,9 +56,19 @@ angular
         title: 'Tipos'
     };
     
+    var bienesState = {
+        name: 'bienes',
+        url: '/bienes',
+        templateUrl: 'views/bienes.html',
+        controller: 'BienesCtrl',
+        controllerAs: 'bienes',
+        title: 'Bienes'
+    };
+    
     $stateProvider.state(mainState);
     $stateProvider.state(credencialesState);
     $stateProvider.state(marcasState);
     $stateProvider.state(tiposState);
+    $stateProvider.state(bienesState);
 })
 .path_location = 'http://localhost:8000/sis-inventario-backend/';

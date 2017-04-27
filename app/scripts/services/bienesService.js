@@ -8,16 +8,6 @@
  * Factory in the sisInventarioApp.
  */
 angular.module('sisInventarioFrontendApp')
-  .factory('bienesService', function () {
-    // Service logic
-    // ...
-
-    var meaningOfLife = 42;
-
-    // Public API here
-    return {
-      someMethod: function () {
-        return meaningOfLife;
-      }
-    };
-  });
+.factory('BienesService', function ($resource) {
+    return $resource(angular.module("sisInventarioFrontendApp").path_location + "bienes/:id.json");
+});
