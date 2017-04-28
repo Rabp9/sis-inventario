@@ -21,8 +21,8 @@
                 <div class="form-group">
                     <label for="sltMarca">Marca</label>
                     <select id="sltMarca" class="form-control"
-                        ng-options="marca as marca.descripcion for marca in marcas"
-                        ng-model="marca_selected" ng-click="selectMarcas(marca_selected)">
+                        ng-options="marca.id as marca.descripcion for marca in marcas"
+                        ng-model="bien.marca_id">
                         <option value="">Selecciona un Marca</option>
                     </select>
                 </div>

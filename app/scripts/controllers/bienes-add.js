@@ -42,6 +42,7 @@ angular.module('sisInventarioFrontendApp')
         $('#' + boton).prop('disabled', true);
         
         BienesService.save(bien, function(data) {
+            console.log(data);
             $('#' + boton).removeClass('disabled');
             $('#' + boton).prop('disabled', false);
             $uibModalInstance.close(data);
