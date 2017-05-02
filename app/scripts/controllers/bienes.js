@@ -14,6 +14,9 @@ angular.module('sisInventarioFrontendApp')
     });
         
     $scope.showBienesAdd = function(event) {
+        $(event.currentTarget).addClass('disabled');
+        $(event.currentTarget).prop('disabled', true);
+        
         var modalInstanceAdd = $uibModal.open({
             templateUrl: 'views/bienes-add.html',
             controller: 'BienesAddCtrl',
@@ -21,13 +24,15 @@ angular.module('sisInventarioFrontendApp')
         });
         
         modalInstanceAdd.result.then(function (data) {
-            $scope.marcas.push(data.bien);
+            $scope.bienes.push(data.bien);
             $scope.message = data.message;
         });
+        
+        $(event.currentTarget).removeClass('disabled');
+        $(event.currentTarget).prop('disabled', false);
     };
     
-    
-    $scope.showMarcasEdit = function(bien, event) {
+    $scope.showBienesEdit = function(bien, event) {
         var modalInstanceEdit = $uibModal.open({
             templateUrl: 'views/bienes-edit.html',
             controller: 'BienesEditCtrl',

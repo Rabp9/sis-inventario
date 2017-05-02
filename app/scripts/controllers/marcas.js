@@ -26,7 +26,6 @@ angular.module('sisInventarioFrontendApp')
         });
     };
     
-    
     $scope.showMarcasEdit = function(marca) {
         var modalInstanceEdit = $uibModal.open({
             templateUrl: 'views/marcas-edit.html',

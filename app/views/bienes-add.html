@@ -12,19 +12,33 @@
                 </div>
                 <div class="form-group">
                     <label for="sltTipo">Tipo</label>
-                    <select id="sltTipo" class="form-control"
-                        ng-options="tipo as tipo.descripcion for tipo in tipos"
-                        ng-model="tipo_selected" ng-click="selectTipo(tipo_selected)">
-                        <option value="">Selecciona un Tipo</option>
-                    </select>
+                    <div class="input-group">
+                        <select id="sltTipo" class="form-control"
+                            ng-options="tipo as tipo.descripcion for tipo in tipos"
+                            ng-model="tipo_selected" ng-click="selectTipo(tipo_selected)">
+                            <option value="">Selecciona un Tipo</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary" ng-click="showTiposAdd($event)">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="sltMarca">Marca</label>
-                    <select id="sltMarca" class="form-control"
-                        ng-options="marca.id as marca.descripcion for marca in marcas"
-                        ng-model="bien.marca_id">
-                        <option value="">Selecciona un Marca</option>
-                    </select>
+                    <div class="input-group">
+                        <select id="sltMarca" class="form-control"
+                            ng-options="marca.id as marca.descripcion for marca in marcas"
+                            ng-model="bien.marca_id">
+                            <option value="">Selecciona un Marca</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary" ng-click="showMarcasAdd($event)">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="txtModelo">Modelo</label>
@@ -41,14 +55,14 @@
             </div>
             <div class="col-sm-4">
                 <div class="form-group" ng-repeat="bien_dato in bien.bien_datos">
-                    <label>{{ bien_dato.dato.descripcion }}</label>
-                    <input class="form-control" type="text" ng-model="bien_dato.descripcion" />
+                    <label for="bienDato{{$id}}">{{ bien_dato.dato.descripcion }}</label>
+                    <input id="bienDato{{$id}}" class="form-control" type="text" ng-model="bien_dato.descripcion" />
                 </div>
             </div>
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="cancel()">Cerrar</button>
-        <button id="btnSaveMarca" class="btn btn-success" type="submit">Guardar Marca</button>
+        <button id="btnSaveBien" class="btn btn-success" type="submit">Guardar Marca</button>
     </div>
 </form>
