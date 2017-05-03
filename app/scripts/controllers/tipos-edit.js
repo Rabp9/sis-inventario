@@ -8,9 +8,11 @@
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-.controller('TiposEditCtrl', function ($scope, tipo, $uibModalInstance, TiposService) {
-    $scope.tipo = $.extend(true, {}, tipo);
-    
+.controller('TiposEditCtrl', function ($scope, tipo_id, $uibModalInstance, TiposService) {
+    TiposService.get({id: tipo_id}, function(data) {
+        $scope.tipo = data.tipo;
+    });
+
     $scope.cancel = function() {
         $uibModalInstance.dismiss('cancel');
     };

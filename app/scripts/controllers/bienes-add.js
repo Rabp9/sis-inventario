@@ -24,14 +24,17 @@ angular.module('sisInventarioFrontendApp')
         $uibModalInstance.dismiss('cancel');
     };
     
-    $scope.selectTipo = function(tipo_selected) {
-        if (tipo_selected !== undefined) {
+    $scope.selectTipo = function(tipo_id) {
+        if (tipo_id !== undefined) {
             $scope.bien.bien_datos = [];
-            $scope.bien.tipo_id = tipo_selected.id;
-            angular.forEach(tipo_selected.datos, function(value, key) {
-                $scope.bien.bien_datos.push({
-                    dato: value,
-                    dato_id: value.id
+            TiposService.get({id: tipo_id}, function(data) {
+                var tipo = data.tipo;
+                
+                angular.forEach(tipo.datos, function(value, key) {
+                    $scope.bien.bien_datos.push({
+                        dato: value,
+                        dato_id: value.id
+                    });
                 });
             });
         }
