@@ -6,19 +6,20 @@
 <hr>
 <div class="row">
     <button type="button" class="btn btn-primary" ng-click="showCredencialesAdd()"><span class="glyphicon glyphicon-plus"></span> Nueva Credencial</button>
-    <div class="table-responsive">
+    <input class="form-control" type="search" ng-model="searchText" placeholder="Buscar...">
+    <scrollable-table watch="credenciales" class="table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Código</th>
-                    <th>Software</th>
-                    <th>Username</th>
-                    <th>Password</th>
+                    <th sortable-header col="id">Código</th>
+                    <th sortable-header col="software">Software</th>
+                    <th sortable-header col="username">Username</th>
+                    <th sortable-header col="password">Password</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-class="{'danger': credencial.estado_id === 2}" ng-repeat="credencial in credenciales">
+                <tr ng-class="{'danger': credencial.estado_id === 2}" ng-repeat="credencial in credenciales | searchTextFilter:searchText:['estado_id']" row-id="{{ credencial.id }}">
                     <td>{{ credencial.id }}</td>
                     <td>{{ credencial.software }}</td>
                     <td>{{ credencial.username }}</td>
@@ -27,5 +28,5 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </scrollable-table>
 </div>

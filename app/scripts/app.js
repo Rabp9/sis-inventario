@@ -17,7 +17,8 @@ angular
     'ngTouch',
     'ui.router',
     'ui.bootstrap',
-    'ui.sortable'
+    'ui.sortable',
+    'scrollable-table'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
     var mainState = {

@@ -12,7 +12,7 @@ angular.module('sisInventarioFrontendApp')
     CredencialesService.get(function(data) {
         $scope.credenciales = data.credenciales;
     });
-    
+        
     $scope.showCredencialesAdd = function() {
         var modalInstanceAdd = $uibModal.open({
             templateUrl: 'views/credenciales-add.html',

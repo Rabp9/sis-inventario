@@ -5,18 +5,23 @@
 <h2>Bienes</h2>
 <hr>
 <div class="row">
-    <button type="button" class="btn btn-primary" ng-click="showBienesAdd($event)"><span class="glyphicon glyphicon-plus"></span> Nueva Bien</button>
-    <div class="table-responsive">
+    <button type="button" class="btn btn-primary" ng-click="showBienesAdd($event)"><span class="glyphicon glyphicon-plus"></span> Nuevo Bien</button>
+    Mostrando 
+    <select class="form-control" style="display: inline; width: 80px;"
+        ng-options="size as size for size in [10, 20, 30, 40, 50]" ng-model="maxSize">
+    </select>
+    registros
+    <scrollable-table watch="bienes" class="table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Código</th>
-                    <th>Descripción</th>
-                    <th>Tipo</th>
-                    <th>Marca</th>
-                    <th>Modelo</th>
-                    <th>Serie</th>
-                    <th>Cód. Pat.</th>
+                    <th sortable-header col="id">Código</th>
+                    <th sortable-header col="descripcion">Descripción</th>
+                    <th sortable-header col="tipo.descripcion">Tipo</th>
+                    <th sortable-header col="marca.descripcion">Marca</th>
+                    <th sortable-header col="modelo">Modelo</th>
+                    <th sortable-header col="serie">Serie</th>
+                    <th sortable-header col="codigo_patrimonial">Cód. Pat.</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -33,5 +38,10 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </scrollable-table>
+    <ul uib-pagination total-items="pagination.totalItems" first-text="Primero" 
+        last-text="Último" next-text="Siguiente" previous-text="Anterior"
+        items-per-page="pagination.itemsPerPage" ng-model="page" 
+        class="pagination-sm" boundary-links="true" force-ellipses="true"
+        ng-change="pageChanged()"></ul>
 </div>

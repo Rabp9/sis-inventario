@@ -9,10 +9,25 @@
  */
 angular.module('sisInventarioFrontendApp')
 .controller('BienesCtrl', function ($scope, BienesService, $uibModal) {
-    BienesService.get(function(data) {
-        $scope.bienes = data.bienes;
+    $scope.maxSize = 10;
+    $scope.page = 1;
+    
+    function getBienes() {
+        BienesService.get({
+            maxSize: $scope.maxSize,
+            page: $scope.page
+        }, function(data) {
+            $scope.bienes = data.bienes;
+            $scope.pagination = data.pagination;
+        });
+    }
+    getBienes();
+    
+    $scope.$watch('maxSize', function(newValue, oldValue) {
+        $scope.page = 1;
+        getBienes();
     });
-        
+    
     $scope.showBienesAdd = function(event) {
         $(event.currentTarget).addClass('disabled');
         $(event.currentTarget).prop('disabled', true);
@@ -48,4 +63,8 @@ angular.module('sisInventarioFrontendApp')
             $scope.message = data.message;
         });
     };
+    
+    $scope.pageChanged = function() {
+        getBienes();
+    }
 });

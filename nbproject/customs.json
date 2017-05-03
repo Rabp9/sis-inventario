@@ -1,0 +1,10 @@
+{
+    "elements": {
+        "scrollable-table": {}
+    },
+    "attributes": {
+        "sortable-header": {
+            "context": "th"
+        }
+    }
+}

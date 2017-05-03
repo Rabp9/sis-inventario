@@ -27,14 +27,14 @@ angular.module('sisInventarioFrontendApp')
     };
     
     
-    $scope.showTiposEdit = function(tipo) {
+    $scope.showTiposEdit = function(tipo_id) {
         var modalInstanceEdit = $uibModal.open({
             templateUrl: 'views/tipos-edit.html',
             controller: 'TiposEditCtrl',
             backdrop: false,
             resolve: {
-                tipo: function() {
-                    return tipo;
+                tipo_id: function() {
+                    return tipo_id;
                 }
             }
         });
