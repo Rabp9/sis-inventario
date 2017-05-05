@@ -1,1 +1,77 @@
-<p>This is the registrar-lote view.</p>
+<div class="alert alert-dismissible" ng-class="{'alert-success': message.type === 'success', 'alert-danger': message.type === 'error'}" role="alert" ng-show="message.type !== undefined">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {{ message.text }} 
+</div>
+<h2>Registrar Lote</h2>
+<hr>
+<form ng-submit="saveRegistrarLote(bienes)">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="sltTipo">Tipo</label>
+                <div class="input-group">
+                    <select id="sltTipo" class="form-control"
+                        ng-options="tipo.id as tipo.descripcion for tipo in tipos"
+                        ng-model="tipo_id" ng-change="selectTipo(tipo_id)">
+                        <option value="">Selecciona un Tipo</option>
+                    </select>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="showTiposAdd($event)">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="sltMarca">Marca</label>
+                <div class="input-group">
+                    <select id="sltMarca" class="form-control"
+                        ng-options="marca.id as marca.descripcion for marca in marcas"
+                        ng-model="marca_id">
+                        <option value="">Selecciona un Marca</option>
+                    </select>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="showMarcasAdd($event)">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">        
+            <div class="form-group">
+                <label for="txtModelo">Modelo</label>
+                <input id="txtModelo" class="form-control" type="text" ng-model="bien.modelo" />
+            </div>
+        </div>
+        <div class="col-sm-12">
+            Total de bienes a registrar {{ bienes.length }} 
+            <button type="button" ng-click="addBien()"><span class="glyphicon glyphicon-plus"></span></button>
+            <scrollable-table watch="bienes" class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th sortable-header col="descripcion">Descripción</th>
+                            <th sortable-header col="serie">Serie</th>
+                            <th sortable-header col="codigo_patrimonial">Cód. Pat.</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-class="{'danger': bien.estado_id == 2}" ng-repeat="bien in bienes" row-id="{{ bien.id }}">
+                            <td><input class="form-control" type="text" ng-model="bien.descripcion" placeholder="Descripción"></td>
+                            <td><input class="form-control" type="text" ng-model="bien.serie" placeholder="Serie"></td>
+                            <td><input class="form-control" type="text" ng-model="bien.codigo_patrimonial" placeholder="Serie"></td>
+                            <td><button type="button" class="btn btn-danger btn-sm" ng-click="removeBien(bien)"><span class="glyphicon glyphicon-remove"></span></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </scrollable-table>
+        </div>
+        <div class="col-sm-12">
+            <button class="btn btn-success pull-right" type="submit"><span class="glyphicon glyphicon-ok"></span> Registrar Lote</button>
+        </div>
+    </div>
+</form>
