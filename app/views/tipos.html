@@ -5,25 +5,27 @@
 <h2>Tipos de Bienes</h2>
 <hr>
 <div class="row">
+    <div class="col-sm-12">
     <button type="button" class="btn btn-primary" ng-click="showTiposAdd()"><span class="glyphicon glyphicon-plus"></span> Nueva Tipo</button>
-    <scrollable-table watch="tipos" class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th sortable-header col="id">Código</th>
-                    <th sortable-header col="descripcion">Descripción</th>
-                    <th sortable-header col="naturaleza">Naturaleza</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-class="{'danger': tipo.estado_id == 2}" ng-repeat="tipo in tipos" row-id="{{ tipo.id }}">
-                    <td>{{ tipo.id }}</td>
-                    <td>{{ tipo.descripcion }}</td>
-                    <td>{{ tipo.naturaleza }}</td>
-                    <td><button type="button" class="btn btn-primary btn-sm" ng-click="showTiposEdit(tipo.id)"><span class="glyphicon glyphicon-pencil"></span></button></td>
-                </tr>
-            </tbody>
-        </table>
-    </scrollable-table>
+        <scrollable-table watch="tipos" class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th sortable-header col="id">Código</th>
+                        <th sortable-header col="descripcion">Descripción</th>
+                        <th sortable-header col="naturaleza">Naturaleza</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-class="{'danger': tipo.estado_id == 2}" ng-repeat="tipo in tipos" row-id="{{ tipo.id }}">
+                        <td>{{ tipo.id }}</td>
+                        <td>{{ tipo.descripcion }}</td>
+                        <td>{{ tipo.naturaleza }}</td>
+                        <td><button type="button" class="btn btn-primary btn-sm" ng-click="showTiposEdit(tipo.id)"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </scrollable-table>
+    </div>
 </div>

@@ -1,10 +1,17 @@
 {
     "elements": {
+        "ui-view": {},
         "scrollable-table": {}
     },
     "attributes": {
         "sortable-header": {
             "context": "th"
+        },
+        "ui-sref-active": {
+            "context": "li"
+        },
+        "ui-sref": {
+            "context": "a"
         }
     }
 }

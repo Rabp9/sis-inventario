@@ -1,10 +1,10 @@
-<div class="alert alert-dismissible" ng-class="{'alert-success': message.type === 'success', 'alert-danger': message.type === 'error'}" role="alert" ng-show="message.type !== undefined">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    {{ message.text }} 
+<div class="alert alert-dismissible" ng-class="{'alert-success': message.code === 200, 'alert-danger': message.code !== 200 }" role="alert" ng-show="message.code !== undefined">
+    <button type="button" class="close" ng-click="message.code = undefined" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {{ message.message }} 
 </div>
 <h2>Registrar Lote</h2>
 <hr>
-<form ng-submit="saveRegistrarLote(bienes)">
+<form ng-submit="saveRegistrarLote(bienes, marca_id, tipo_id, modelo, 'registrarLote')">
     <div class="row">
         <div class="col-sm-4">
             <div class="form-group">
@@ -12,7 +12,7 @@
                 <div class="input-group">
                     <select id="sltTipo" class="form-control"
                         ng-options="tipo.id as tipo.descripcion for tipo in tipos"
-                        ng-model="tipo_id" ng-change="selectTipo(tipo_id)">
+                        ng-model="tipo_id">
                         <option value="">Selecciona un Tipo</option>
                     </select>
                     <span class="input-group-btn">
@@ -43,7 +43,7 @@
         <div class="col-sm-4">        
             <div class="form-group">
                 <label for="txtModelo">Modelo</label>
-                <input id="txtModelo" class="form-control" type="text" ng-model="bien.modelo" />
+                <input id="txtModelo" class="form-control" type="text" ng-model="modelo" />
             </div>
         </div>
         <div class="col-sm-12">
@@ -54,7 +54,7 @@
                     <thead>
                         <tr>
                             <th sortable-header col="descripcion">Descripción</th>
-                            <th sortable-header col="serie">Serie</th>
+                            <th sortable-header col="">Serie</th>
                             <th sortable-header col="codigo_patrimonial">Cód. Pat.</th>
                             <th></th>
                         </tr>
@@ -71,7 +71,7 @@
             </scrollable-table>
         </div>
         <div class="col-sm-12">
-            <button class="btn btn-success pull-right" type="submit"><span class="glyphicon glyphicon-ok"></span> Registrar Lote</button>
+            <button id="registrarLote" class="btn btn-success pull-right" type="submit"><span class="glyphicon glyphicon-ok"></span> Registrar Lote</button>
         </div>
     </div>
 </form>

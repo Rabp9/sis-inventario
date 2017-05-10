@@ -8,8 +8,9 @@
  * Controller of the sisInventarioApp
  */
 angular.module('sisInventarioFrontendApp')
-.controller('RegistrarLoteCtrl', function ($scope, TiposService, MarcasService) {
+.controller('RegistrarLoteCtrl', function ($scope, TiposService, MarcasService, BienesService, $utilsViewService) {
     $scope.bienes = [];
+    $scope.message = {};
     
     TiposService.get(function(data) {
         $scope.tipos = data.tipos;
@@ -28,11 +29,23 @@ angular.module('sisInventarioFrontendApp')
         $scope.bienes.splice($scope.bienes.indexOf(bien), 1);
     };
     
-    $scope.selectTipo = function(tipo_id) {
-        if (tipo_id !== undefined) {
-            TiposService.get({id: tipo_id}, function(data) {
-                
-            });
-        }
+    $scope.saveRegistrarLote = function(bienes, marca_id, tipo_id, modelo, boton) {
+        $utilsViewService.disable('#' + boton);
+        $utilsViewService.setPropertyToAllItemsOfArrayObject(bienes, 'marca_id', marca_id);
+        $utilsViewService.setPropertyToAllItemsOfArrayObject(bienes, 'tipo_id', tipo_id);
+        $utilsViewService.setPropertyToAllItemsOfArrayObject(bienes, 'modelo', modelo);
+        
+        var data = BienesService.registrarLote({
+            bienes: bienes
+        }, function() {
+            $scope.message = data;
+            $scope.bienes = [];
+            $scope.marca_id = "";
+            $scope.tipo_id = "";
+            $scope.modelo = "";
+            $utilsViewService.enable('#' + boton);
+        }, function(err) {
+            $scope.message = data;
+        });
     };
 });

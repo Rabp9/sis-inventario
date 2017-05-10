@@ -5,28 +5,30 @@
 <h2>Credenciales</h2>
 <hr>
 <div class="row">
-    <button type="button" class="btn btn-primary" ng-click="showCredencialesAdd()"><span class="glyphicon glyphicon-plus"></span> Nueva Credencial</button>
-    <input class="form-control" type="search" ng-model="searchText" placeholder="Buscar...">
-    <scrollable-table watch="credenciales" class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th sortable-header col="id">Código</th>
-                    <th sortable-header col="software">Software</th>
-                    <th sortable-header col="username">Username</th>
-                    <th sortable-header col="password">Password</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-class="{'danger': credencial.estado_id === 2}" ng-repeat="credencial in credenciales | searchTextFilter:searchText:['estado_id']" row-id="{{ credencial.id }}">
-                    <td>{{ credencial.id }}</td>
-                    <td>{{ credencial.software }}</td>
-                    <td>{{ credencial.username }}</td>
-                    <td>{{ credencial.password }}</td>
-                    <td><button type="button" class="btn btn-primary btn-sm" ng-click="showCredencialesEdit(credencial)"><span class="glyphicon glyphicon-pencil"></span></button></td>
-                </tr>
-            </tbody>
-        </table>
-    </scrollable-table>
+    <div class="col-sm-12">
+        <button type="button" class="btn btn-primary" ng-click="showCredencialesAdd()"><span class="glyphicon glyphicon-plus"></span> Nueva Credencial</button>
+        <input class="form-control" type="search" ng-model="searchText" placeholder="Buscar...">
+        <scrollable-table watch="credenciales" class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th sortable-header col="id">Código</th>
+                        <th sortable-header col="software">Software</th>
+                        <th sortable-header col="username">Username</th>
+                        <th sortable-header col="password">Password</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-class="{'danger': credencial.estado_id === 2}" ng-repeat="credencial in credenciales | searchTextFilter:searchText:['estado_id']" row-id="{{ credencial.id }}">
+                        <td>{{ credencial.id }}</td>
+                        <td>{{ credencial.software }}</td>
+                        <td>{{ credencial.username }}</td>
+                        <td>{{ credencial.password }}</td>
+                        <td><button type="button" class="btn btn-primary btn-sm" ng-click="showCredencialesEdit(credencial)"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </scrollable-table>
+    </div>
 </div>
