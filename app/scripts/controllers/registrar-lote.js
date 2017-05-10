@@ -40,9 +40,9 @@ angular.module('sisInventarioFrontendApp')
         }, function() {
             $scope.message = data;
             $scope.bienes = [];
-            $scope.marca_id = "";
-            $scope.tipo_id = "";
-            $scope.modelo = "";
+            $scope.marca_id = '';
+            $scope.tipo_id = '';
+            $scope.modelo = '';
             $utilsViewService.enable('#' + boton);
         }, function(err) {
             $scope.message = data;

@@ -66,5 +66,5 @@ angular.module('sisInventarioFrontendApp')
     
     $scope.pageChanged = function() {
         getBienes();
-    }
+    };
 });

@@ -9,5 +9,5 @@
  */
 angular.module('sisInventarioFrontendApp')
 .factory('CredencialesService', function ($resource) {
-    return $resource(angular.module("sisInventarioFrontendApp").path_location + "credenciales/:id.json");
+    return $resource(angular.module('sisInventarioFrontendApp').path_location + 'credenciales/:id.json');
 });

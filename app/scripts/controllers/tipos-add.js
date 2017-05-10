@@ -33,10 +33,10 @@ angular.module('sisInventarioFrontendApp')
             estado_id: 1
         });
         $scope.dato_nuevo_descripcion = '';
-    }
+    };
     
     $scope.removeDato = function(dato) {
         var index = $scope.tipo.datos.indexOf(dato);
         $scope.tipo.datos.splice(index, 1);
-    }
+    };
 });

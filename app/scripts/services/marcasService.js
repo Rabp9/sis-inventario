@@ -9,5 +9,5 @@
  */
 angular.module('sisInventarioFrontendApp')
 .factory('MarcasService', function ($resource) {
-    return $resource(angular.module("sisInventarioFrontendApp").path_location + "marcas/:id.json");
+    return $resource(angular.module('sisInventarioFrontendApp').path_location + 'marcas/:id.json');
 });

@@ -11,8 +11,12 @@
 angular.module('sisInventarioFrontendApp')
 .filter('searchFilter', function () {
     return function(input, search) {
-        if (!input) return input;
-        if (!search) return input;
+        if (!input) {
+            return input;
+        }
+        if (!search) {
+            return input;
+        }
         var result = [];
         angular.forEach(search, function (v_search, k_search) {
             angular.forEach(input, function (v_input, k_input) {
@@ -24,5 +28,5 @@ angular.module('sisInventarioFrontendApp')
             });
         });
         return result;
-    }
+    };
 });

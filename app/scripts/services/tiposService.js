@@ -9,5 +9,5 @@
  */
 angular.module('sisInventarioFrontendApp')
 .factory('TiposService', function ($resource) {
-    return $resource(angular.module("sisInventarioFrontendApp").path_location + "tipos/:id.json");
+    return $resource(angular.module('sisInventarioFrontendApp').path_location + 'tipos/:id.json');
 });

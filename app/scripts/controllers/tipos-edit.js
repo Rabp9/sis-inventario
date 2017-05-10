@@ -34,7 +34,7 @@ angular.module('sisInventarioFrontendApp')
             estado_id: 1
         });
         $scope.dato_nuevo_descripcion = '';
-    }
+    };
     
     $scope.removeDato = function(dato) {
         if (!dato.id) {
@@ -43,5 +43,5 @@ angular.module('sisInventarioFrontendApp')
         } else {
             dato.estado_id = 2;
         }
-    }
+    };
 });

@@ -11,8 +11,12 @@
 angular.module('sisInventarioFrontendApp')
 .filter('searchTextFilter', function () {
     return function(input, searchText, excluded) {
-        if (!input) return input;
-        if (!searchText) return input;
+        if (!input) {
+            return input;
+        }
+        if (!searchText) {
+            return input;
+        }
         var result = [];
         excluded.push('$$hashKey');
         angular.forEach(input, function (v_input, k_input) {
@@ -30,5 +34,5 @@ angular.module('sisInventarioFrontendApp')
             });
         });
         return result;
-    }
+    };
 });
