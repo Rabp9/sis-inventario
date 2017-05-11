@@ -75,11 +75,22 @@ angular
         title: 'Registrar Lote'
     };
     
+    var busquedaState = {
+        name: 'busqueda',
+        url: '/busqueda',
+        templateUrl: 'views/busqueda.html',
+        controller: 'BusquedaCtrl',
+        controllerAs: 'busqueda',
+        title: 'Búsqueda'
+    };
+    
     $stateProvider.state(mainState);
     $stateProvider.state(credencialesState);
     $stateProvider.state(marcasState);
     $stateProvider.state(tiposState);
     $stateProvider.state(bienesState);
     $stateProvider.state(registrarLoteState);
+    $stateProvider.state(busquedaState);
+    $urlRouterProvider.when('', '/');
 })
 .path_location = 'http://localhost:8000/sis-inventario-backend/';

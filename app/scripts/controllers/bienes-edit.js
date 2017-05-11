@@ -8,25 +8,47 @@
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-.controller('BienesEditCtrl', function ($scope, bien, $uibModalInstance, BienesService, TiposService, MarcasService) {
-    BienesService.get({id: bien.id}, function(data) {
-        $scope.bien = data.bien;
-        TiposService.get({id: bien.tipo_id}, function(data) {
-            var tipo = data.tipo;
-            angular.forEach(tipo.datos, function (dato, k_dato) {
-                var asignado = false;
-                angular.forEach($scope.bien.bien_datos, function (bien_dato, k_bien_dato) {
-                    if (dato.id === bien_dato.dato_id) {
-                        asignado = true;
-                    }
-                });
-                if (!asignado) {
-                    $scope.bien.bien_datos.push({
-                        dato: dato,
-                        dato_id: dato.id
-                    });
+.controller('BienesEditCtrl', function ($scope, bien_id, $uibModalInstance, 
+    BienesService, TiposService, MarcasService, $q, $utilsViewService) {
+    
+    $scope.bien = {};
+    function getBien(bien_id) {
+        return $q(function(resolve, reject) {
+            var bien = BienesService.get({id: bien_id}, function() {
+                $scope.bien = bien.bien;
+                resolve(bien.bien.tipo_id);
+            });
+        });
+    }
+    
+    function getTipo(tipo_id) {
+        return $q(function(resolve, reject) {
+            var data = TiposService.get({id: tipo_id}, function() {
+                resolve(data.tipo.datos);
+            });
+        });
+    }
+    
+    function setDatos(datos) {
+        angular.forEach(datos, function (dato, k_dato) {
+            var asignado = false;
+            angular.forEach($scope.bien.bien_datos, function (bien_dato, k_bien_dato) {
+                if (dato.id === bien_dato.dato_id) {
+                    asignado = true;
                 }
             });
+            if (!asignado) {
+                $scope.bien.bien_datos.push({
+                    dato: dato,
+                    dato_id: dato.id
+                });
+            }
+        });
+    }
+    
+    getBien(bien_id).then(function(tipo_id) {
+        getTipo(tipo_id).then(function(datos) {
+            setDatos(datos);
         });
     });
     
@@ -59,12 +81,11 @@ angular.module('sisInventarioFrontendApp')
     };
     
     $scope.saveBien = function(bien, boton) {
-        $('#' + boton).addClass('disabled');
-        $('#' + boton).prop('disabled', true);
+        $utilsViewService.disable(boton);
         
         BienesService.save(bien, function(data) {
-            $('#' + boton).removeClass('disabled');
-            $('#' + boton).prop('disabled', false);
+            $utilsViewService.enable(boton);
+        
             $uibModalInstance.close(data);
         });
     };

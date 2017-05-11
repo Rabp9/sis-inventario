@@ -8,16 +8,27 @@
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-.controller('BienesAddCtrl', function ($scope, $uibModalInstance, $uibModal, BienesService, TiposService, MarcasService) {
+.controller('BienesAddCtrl', function ($scope, $uibModalInstance, $uibModal, BienesService, TiposService, MarcasService, $utilsViewService) {
     $scope.bien = {};
     $scope.bien.bien_datos = [];
+    $scope.loading_tipos = 'Cargando...';
+    $scope.loading_marcas = 'Cargando...';
+    $scope.message = {};
     
-    TiposService.get(function(data) {
-        $scope.tipos = data.tipos;
+    var tipos = TiposService.get(function () {
+        $scope.tipos = tipos.tipos;
+        $scope.loading_tipos = 'Selecciona un Tipo';
+    }, function (err) {
+        $uibModalInstance.close(err.data);
+        $scope.loading_tipos = 'Selecciona un Tipo';
     });
     
-    MarcasService.get(function(data) {
-        $scope.marcas = data.marcas;
+    var marcas = MarcasService.get(function () {
+        $scope.marcas = marcas.marcas;
+        $scope.loading_marcas = 'Selecciona una Marca';
+    }, function (err) {
+        $uibModalInstance.close(err.data);
+        $scope.loading_marcas = 'Selecciona una Mcarca';
     });
     
     $scope.cancel = function() {
@@ -41,8 +52,7 @@ angular.module('sisInventarioFrontendApp')
     };
 
     $scope.showTiposAdd = function(event) {
-        $(event.currentTarget).addClass('disabled');
-        $(event.currentTarget).prop('disabled', true);
+        $utilsViewService.disable(event.currentTarget);
         
         var modalInstanceAdd = $uibModal.open({
             templateUrl: 'views/tipos-add.html',
@@ -51,38 +61,44 @@ angular.module('sisInventarioFrontendApp')
             size: 'sm'
         });
         
+        $utilsViewService.enable(event.currentTarget);
+        
         modalInstanceAdd.result.then(function (data) {
             $scope.tipos.push(data.tipo);
             $scope.bien.tipo_id = data.tipo.id;
             $scope.selectTipo(data.tipo.id);
-        });        
-        
-        $(event.currentTarget).removeClass('disabled');
-        $(event.currentTarget).prop('disabled', false);
+            $scope.message = data.message;
+        });
     };
     
     $scope.showMarcasAdd = function(event) {
+        $utilsViewService.disable(event.currentTarget);
+        
         var modalInstanceAdd = $uibModal.open({
             templateUrl: 'views/marcas-add.html',
             controller: 'MarcasAddCtrl',
-            backdrop: false
+            backdrop: false,
+            size: 'sm'
         });
+        
+        $utilsViewService.enable(event.currentTarget);
         
         modalInstanceAdd.result.then(function (data) {
             $scope.marcas.push(data.marca);
+            $scope.bien.marca_id = data.marca.id;
             $scope.message = data.message;
         });
     };
     
     $scope.saveBien = function(bien, boton) {
-        $('#' + boton).addClass('disabled');
-        $('#' + boton).prop('disabled', true);
-
-        console.log(bien);
-        BienesService.save(bien, function(data) {
-            $('#' + boton).removeClass('disabled');
-            $('#' + boton).prop('disabled', false);
+        $utilsViewService.disable('#' + boton);
+        
+        var data = BienesService.save(bien, function() {
+            $utilsViewService.enable('#' + boton);
+            
             $uibModalInstance.close(data);
+        }, function(err) {
+            $uibModalInstance.close(err.data);    
         });
     };
 });

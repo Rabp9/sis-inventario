@@ -1,7 +1,12 @@
 {
     "elements": {
         "ui-view": {},
-        "scrollable-table": {}
+        "scrollable-table": {
+            "attributes": {
+                "watch": {},
+                "class": {}
+            }
+        }
     },
     "attributes": {
         "sortable-header": {

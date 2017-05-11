@@ -46,7 +46,7 @@
                           <li ui-sref-active="active"><a ui-sref="marcas">Marcas</a></li>
                           <li ui-sref-active="active"><a ui-sref="tipos">Tipos</a></li>
                           <li ui-sref-active="active"><a ui-sref="movimientos">Movimientos</a></li>
-                          <li ui-sref-active="active"><a ui-sref="consultas">Búsqueda</a></li>
+                          <li ui-sref-active="active"><a ui-sref="busqueda">Búsqueda</a></li>
                       </ul>
                 </div>
             </div>
@@ -62,18 +62,6 @@
             <p><span class="glyphicon glyphicon-copyright-mark"></span> Transportes Metropolitanos de Trujillo - 2017</p>
         </div>
     </div>
-
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-    <script>
-        !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-        (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-        r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-        }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-        ga('create', 'UA-XXXXX-X');
-        ga('send', 'pageview');
-    </script>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -123,6 +111,7 @@
         <script src="scripts/controllers/bienes-edit.js"></script>
         <script src="scripts/filters/searchfilter.js"></script>
         <script src="scripts/filters/searchtextfilter.js"></script>
+        <script src="scripts/directives/focus-me.js"></script>
         <!-- endbuild -->
 </body>
 </html>

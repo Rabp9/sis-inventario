@@ -1,6 +1,6 @@
-<div class="alert alert-dismissible" ng-class="{'alert-success': message.type === 'success', 'alert-danger': message.type === 'error'}" role="alert" ng-show="message.type !== undefined">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    {{ message.text }} 
+<div class="alert alert-dismissible" ng-class="{'alert-success': message.code === 200, 'alert-danger': message.code !== 200 }" role="alert" ng-show="message.code !== undefined">
+    <button type="button" class="close" ng-click="message.code = undefined" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {{ message.message }} 
 </div>
 <h2>Bienes</h2>
 <hr>
@@ -27,7 +27,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-class="{'danger': bien.estado_id == 2}" ng-repeat="bien in bienes" row-id="{{ bien.id }}">
+                    <tr ng-show="loading"><td colspan="8">Cargando...</td></tr>
+                    <tr ng-show="!loading && bienes.length === 0"><td colspan="8">No hay registros</td></tr>
+                    <tr ng-show="!loading" ng-class="{'danger': bien.estado_id == 2}" ng-repeat="bien in bienes" row-id="{{ bien.id }}">
                         <td>{{ bien.id }}</td>
                         <td>{{ bien.descripcion }}</td>
                         <td>{{ bien.tipo.descripcion }}</td>
@@ -35,7 +37,7 @@
                         <td>{{ bien.modelo }}</td>
                         <td>{{ bien.serie }}</td>
                         <td>{{ bien.codigo_patrimonial }}</td>
-                        <td><button type="button" class="btn btn-primary btn-sm" ng-click="showBienesEdit(bien)"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                        <td><button type="button" class="btn btn-primary btn-sm" ng-click="showBienesEdit(bien.id, $event)"><span class="glyphicon glyphicon-pencil"></span></button></td>
                     </tr>
                 </tbody>
             </table>
