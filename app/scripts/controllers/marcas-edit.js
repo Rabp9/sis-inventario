@@ -8,8 +8,14 @@
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-.controller('MarcasEditCtrl', function ($scope, marca, $uibModalInstance, MarcasService) {
-    $scope.marca = marca;
+.controller('MarcasEditCtrl', function ($scope, marca_id, $uibModalInstance, MarcasService) {
+    var marca = MarcasService.get({
+        id: marca_id
+    }, function() {
+        $scope.marca = marca.marca;
+    }, function(err) {
+        $uibModalInstance.close(err.data);
+    });
     
     $scope.cancel = function() {
         $uibModalInstance.dismiss('cancel');
@@ -23,6 +29,8 @@ angular.module('sisInventarioFrontendApp')
             $('#' + boton).removeClass('disabled');
             $('#' + boton).prop('disabled', false);
             $uibModalInstance.close(data);
+        }, function(err) {
+            $uibModalInstance.close(err.data);            
         });
     };
 });

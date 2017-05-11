@@ -69,6 +69,7 @@ angular.module('sisInventarioFrontendApp')
         $utilsViewService.enable(event.currentTarget);
            
         modalInstanceEdit.result.then(function (data) {
+            getBienes();
             $scope.message = data;
         });
     };

@@ -1,12 +1,12 @@
-<div class="alert alert-dismissible" ng-class="{'alert-success': message.type === 'success', 'alert-danger': message.type === 'error'}" role="alert" ng-show="message.type !== undefined">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      {{ message.text }} 
+<div class="alert alert-dismissible" ng-class="{'alert-success': message.code === 200, 'alert-danger': message.code !== 200 }" role="alert" ng-show="message.code !== undefined">
+    <button type="button" class="close" ng-click="message.code = undefined" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {{ message.message }} 
 </div>
 <h2>Marcas</h2>
 <hr>
 <div class="row">
     <div class="col-sm-12">
-        <button type="button" class="btn btn-primary" ng-click="showMarcasAdd()"><span class="glyphicon glyphicon-plus"></span> Nueva Marca</button>
+        <button type="button" class="btn btn-primary" ng-click="showMarcasAdd($event)"><span class="glyphicon glyphicon-plus"></span> Nueva Marca</button>
         <scrollable-table watch="marcas" class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -17,10 +17,12 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr ng-show="loading"><td colspan="8">Cargando...</td></tr>
+                    <tr ng-show="!loading && marcas.length === 0"><td colspan="8">No hay registros</td></tr>
                     <tr ng-class="{'danger': marca.estado_id === 2}" ng-repeat="marca in marcas" row-id="{{ marca.id }}">
                         <td>{{ marca.id }}</td>
                         <td>{{ marca.descripcion }}</td>
-                        <td><button type="button" class="btn btn-primary btn-sm" ng-click="showMarcasEdit(marca)"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                        <td><button type="button" class="btn btn-primary btn-sm" ng-click="showMarcasEdit(marca.id, $event)"><span class="glyphicon glyphicon-pencil"></span></button></td>
                     </tr>
                 </tbody>
             </table>

@@ -16,7 +16,7 @@
                         <select id="sltTipo" class="form-control"
                             ng-options="tipo.id as tipo.descripcion for tipo in tipos"
                             ng-model="bien.tipo_id" ng-change="selectTipo(bien.tipo_id)">
-                            <option value="">Selecciona un Tipo</option>
+                            <option value="">{{ loading_tipos }}</option>
                         </select>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-primary" ng-click="showTiposAdd($event)">
@@ -31,7 +31,7 @@
                         <select id="sltMarca" class="form-control"
                             ng-options="marca.id as marca.descripcion for marca in marcas"
                             ng-model="bien.marca_id">
-                            <option value="">Selecciona un Marca</option>
+                            <option value="">{{ loading_marcas }}</option>
                         </select>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-primary" ng-click="showMarcasAdd($event)">

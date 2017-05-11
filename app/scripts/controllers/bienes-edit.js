@@ -10,8 +10,11 @@
 angular.module('sisInventarioFrontendApp')
 .controller('BienesEditCtrl', function ($scope, bien_id, $uibModalInstance, 
     BienesService, TiposService, MarcasService, $q, $utilsViewService) {
-    
+    $scope.loading_tipos = 'Cargando...';
+    $scope.loading_marcas = 'Cargando...';
+    $scope.message = {};
     $scope.bien = {};
+    
     function getBien(bien_id) {
         return $q(function(resolve, reject) {
             var bien = BienesService.get({id: bien_id}, function() {
@@ -81,10 +84,12 @@ angular.module('sisInventarioFrontendApp')
     };
     
     $scope.saveBien = function(bien, boton) {
-        $utilsViewService.disable(boton);
+        $utilsViewService.disable('#' + boton);
+        
+        console.log(bien);
         
         BienesService.save(bien, function(data) {
-            $utilsViewService.enable(boton);
+            $utilsViewService.enable('#' + boton);
         
             $uibModalInstance.close(data);
         });
