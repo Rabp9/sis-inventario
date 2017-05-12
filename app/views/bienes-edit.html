@@ -1,63 +1,67 @@
-<form ng-submit="saveBien(bien, 'btnSaveBien')">
+<form novalidate angular-validator angular-validator-submit="saveBien(bien, 'btnSaveBien')" name="bienEdit" angular-validator-quiet>
     <div class="modal-header">
         <button type="button" class="close" ng-click="cancel()" data-dismiss="modal" aria-hidden="true"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Modificar Bien</h4>
     </div>
     <div class="modal-body">
+        <div class="alert alert-dismissible" ng-class="{'alert-success': message.code === 200, 'alert-danger': message.code !== 200 }" role="alert" ng-show="message.code !== undefined">
+            <button type="button" class="close" ng-click="message.code = undefined" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ message.message }} 
+        </div>
         <div class="row">
-            <div class="col-sm-8">
-                <div class="form-group">
-                    <label for="txtDescripcion">Descripción</label>
-                    <input id="txtDescripcion" class="form-control" type="text" ng-model="bien.descripcion" focus-me="true"/>
-                </div>
-                <div class="form-group">
-                    <label for="sltTipo">Tipo</label>
-                    <div class="input-group">
-                        <select id="sltTipo" class="form-control"
-                            ng-options="tipo.id as tipo.descripcion for tipo in tipos"
-                            ng-model="bien.tipo_id" ng-change="selectTipo(bien.tipo_id)">
-                            <option value="">{{ loading_tipos }}</option>
-                        </select>
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-primary" ng-click="showTiposAdd($event)">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </button>
-                        </span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="sltMarca">Marca</label>
-                    <div class="input-group">
-                        <select id="sltMarca" class="form-control"
-                            ng-options="marca.id as marca.descripcion for marca in marcas"
-                            ng-model="bien.marca_id">
-                            <option value="">{{ loading_marcas }}</option>
-                        </select>
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-primary" ng-click="showMarcasAdd($event)">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </button>
-                        </span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="txtModelo">Modelo</label>
-                    <input id="txtModelo" class="form-control" type="text" ng-model="bien.modelo" />
-                </div>
-                <div class="form-group">
-                    <label for="txtSerie">Serie</label>
-                    <input id="txtSerie" class="form-control" type="text" ng-model="bien.serie" />
-                </div>
-                <div class="form-group">
-                    <label for="txtCodigoPatrimonial">Código Patrimonial</label>
-                    <input id="txtCodigoPatrimonial" class="form-control" type="text" ng-model="bien.codigo_patrimonial" />
+            <div class="form-group col-sm-12">
+                <label for="txtDescripcion">Descripción</label>
+                <input id="txtDescripcion" class="form-control" type="text" ng-model="bien.descripcion" focus-me="true"
+                    name="bienDescripcion" required required-message="'Este campo es requerido'" validate-on="blur"/>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="sltTipo">Tipo</label>
+                <div class="input-group">
+                    <select id="sltTipo" class="form-control"
+                        ng-options="tipo.id as tipo.descripcion for tipo in tipos"
+                        ng-model="bien.tipo_id" ng-change="selectTipo(bien.tipo_id)"
+                        name="bienTipoId" required required-message="'Selecciona un Tipo'" validate-on="blur">
+                        <option value="">{{ loading_tipos }}</option>
+                    </select>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary" ng-click="showTiposAdd($event)">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </span>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="form-group" ng-repeat="bien_dato in bien.bien_datos">
-                    <label for="bienDato{{$id}}">{{ bien_dato.dato.descripcion }}</label>
-                    <input id="bienDato{{$id}}" class="form-control" type="text" ng-model="bien_dato.descripcion" />
+            <div class="form-group col-sm-4">
+                <label for="sltMarca">Marca</label>
+                <div class="input-group">
+                    <select id="sltMarca" class="form-control"
+                        ng-options="marca.id as marca.descripcion for marca in marcas"
+                        ng-model="bien.marca_id"
+                        name="bienMarcaId" required required-message="'Selecciona una Marca'" validate-on="blur">
+                        <option value="">{{ loading_marcas }}</option>
+                    </select>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary" ng-click="showMarcasAdd($event)">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </span>
                 </div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="txtModelo">Modelo</label>
+                <input id="txtModelo" class="form-control" type="text" ng-model="bien.modelo"
+                    name="bienModelo" required required-message="'Este campo es requerido'" validate-on="blur"/>
+            </div>
+            <div class="form-group col-sm-6">
+                <label for="txtSerie">Serie</label>
+                <input id="txtSerie" class="form-control" type="text" ng-model="bien.serie" />
+            </div>
+            <div class="form-group col-sm-6">
+                <label for="txtCodigoPatrimonial">Código Patrimonial</label>
+                <input id="txtCodigoPatrimonial" class="form-control" type="text" ng-model="bien.codigo_patrimonial" />
+            </div>
+            <div class="form-group col-sm-12" ng-repeat="bien_dato in bien.bien_datos">
+                <label for="bienDato{{$id}}">{{ bien_dato.dato.descripcion }}</label>
+                <input id="bienDato{{$id}}" class="form-control" type="text" ng-model="bien_dato.descripcion" />
             </div>
         </div>
     </div>

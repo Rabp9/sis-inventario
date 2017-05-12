@@ -9,6 +9,7 @@
         }
     },
     "attributes": {
+        "angular-validator": {},
         "sortable-header": {
             "context": "th"
         },

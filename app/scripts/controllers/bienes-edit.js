@@ -52,6 +52,8 @@ angular.module('sisInventarioFrontendApp')
     getBien(bien_id).then(function(tipo_id) {
         getTipo(tipo_id).then(function(datos) {
             setDatos(datos);
+            $scope.loading_tipos = 'Selecciona un Tipo';
+            $scope.loading_marcas = 'Selecciona una Marca';
         });
     });
     
