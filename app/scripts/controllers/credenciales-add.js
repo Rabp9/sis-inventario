@@ -8,7 +8,7 @@
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-.controller('CredencialesAddCtrl', function ($scope, $uibModalInstance, CredencialesService) {
+.controller('CredencialesAddCtrl', function ($scope, $uibModalInstance, CredencialesService, $utilsViewService) {
     $scope.credencial = {};
     
     $scope.cancel = function() {
@@ -16,13 +16,12 @@ angular.module('sisInventarioFrontendApp')
     };
 
     $scope.saveCredencial = function(credencial, boton) {
-        $('#' + boton).addClass('disabled');
-        $('#' + boton).prop('disabled', true);
+        $utilsViewService.disable('#' + boton);
         
         CredencialesService.save(credencial, function(data) {
-            $('#' + boton).removeClass('disabled');
-            $('#' + boton).prop('disabled', false);
             $uibModalInstance.close(data);
+        }, function (err) {
+            $uibModalInstance.close(err.data);            
         });
     };
 });

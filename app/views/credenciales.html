@@ -1,6 +1,6 @@
-<div class="alert alert-dismissible" ng-class="{'alert-success': message.type === 'success', 'alert-danger': message.type === 'error'}" role="alert" ng-show="message.type !== undefined">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      {{ message.text }} 
+<div class="alert alert-dismissible" ng-class="{'alert-success': message.code === 200, 'alert-danger': message.code !== 200 }" role="alert" ng-show="message.code !== undefined">
+    <button type="button" class="close" ng-click="message.code = undefined" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {{ message.message }} 
 </div>
 <h2>Credenciales</h2>
 <hr>
@@ -9,7 +9,7 @@
         <button type="button" class="btn btn-primary" ng-click="showCredencialesAdd()"><span class="glyphicon glyphicon-plus"></span> Nueva Credencial</button>
         <input class="form-control" type="search" ng-model="searchText" placeholder="Buscar...">
         <scrollable-table watch="credenciales" class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th sortable-header col="id">Código</th>
@@ -20,12 +20,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-class="{'danger': credencial.estado_id === 2}" ng-repeat="credencial in credenciales | searchTextFilter:searchText:['estado_id']" row-id="{{ credencial.id }}">
+                    <tr ng-show="loading"><td colspan="5">Cargando...</td></tr>
+                    <tr ng-show="!loading && credenciales.length === 0"><td colspan="5">No hay registros</td></tr>
+                    <tr ng-hide="loading" ng-class="{'danger': credencial.estado_id === 2}" ng-repeat="credencial in credenciales | searchTextFilter:searchText:['estado_id']" row-id="{{ credencial.id }}">
                         <td>{{ credencial.id }}</td>
                         <td>{{ credencial.software }}</td>
                         <td>{{ credencial.username }}</td>
                         <td>{{ credencial.password }}</td>
-                        <td><button type="button" class="btn btn-primary btn-sm" ng-click="showCredencialesEdit(credencial)"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                        <td><button type="button" class="btn btn-primary btn-sm" ng-click="showCredencialesEdit(credencial.id)"><span class="glyphicon glyphicon-pencil"></span></button></td>
                     </tr>
                 </tbody>
             </table>

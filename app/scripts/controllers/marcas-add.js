@@ -18,10 +18,11 @@ angular.module('sisInventarioFrontendApp')
     $scope.saveMarca = function(marca, boton) {
         $utilsViewService.disable('#' + boton);
         
-        MarcasService.save(marca, function(data) {
+        MarcasService.save(marca, function (data) {
             $utilsViewService.enable('#' + boton);
-        
             $uibModalInstance.close(data);
+        }, function (err) {
+            $uibModalInstance.close(err.data);
         });
     };
 });

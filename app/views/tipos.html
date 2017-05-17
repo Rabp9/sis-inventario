@@ -8,7 +8,7 @@
     <div class="col-sm-12">
     <button type="button" class="btn btn-primary" ng-click="showTiposAdd()"><span class="glyphicon glyphicon-plus"></span> Nueva Tipo</button>
         <scrollable-table watch="tipos" class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th sortable-header col="id">Código</th>
@@ -18,7 +18,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-class="{'danger': tipo.estado_id == 2}" ng-repeat="tipo in tipos" row-id="{{ tipo.id }}">
+                    <tr ng-show="loading"><td colspan="4">Cargando...</td></tr>
+                    <tr ng-show="!loading && tipos.length === 0"><td colspan="4">No hay registros</td></tr>
+                    <tr ng-hide="loading" ng-class="{'danger': tipo.estado_id == 2}" ng-repeat="tipo in tipos" row-id="{{ tipo.id }}">
                         <td>{{ tipo.id }}</td>
                         <td>{{ tipo.descripcion }}</td>
                         <td>{{ tipo.naturaleza }}</td>

@@ -8,7 +8,7 @@
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-.controller('MarcasEditCtrl', function ($scope, marca_id, $uibModalInstance, MarcasService) {
+.controller('MarcasEditCtrl', function ($scope, marca_id, $uibModalInstance, MarcasService, $utilsViewService) {
     var marca = MarcasService.get({
         id: marca_id
     }, function() {
@@ -22,12 +22,9 @@ angular.module('sisInventarioFrontendApp')
     };
 
     $scope.saveMarca = function(marca, boton) {
-        $('#' + boton).addClass('disabled');
-        $('#' + boton).prop('disabled', true);
+        $utilsViewService.disable('#' + boton);
         
         MarcasService.save(marca, function(data) {
-            $('#' + boton).removeClass('disabled');
-            $('#' + boton).prop('disabled', false);
             $uibModalInstance.close(data);
         }, function(err) {
             $uibModalInstance.close(err.data);            

@@ -1,4 +1,4 @@
-<form ng-submit="saveTipo(tipo, 'btnSaveTipo')">
+<form novalidate angular-validator angular-validator-submit="saveTipo(tipo, 'btnSaveTipo')" name="tipoEdit" angular-validator-quiet>
     <div class="modal-header">
         <button type="button" class="close" ng-click="cancel()" data-dismiss="modal" aria-hidden="true"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Modificar Tipo de Equipo</h4>
@@ -6,12 +6,14 @@
     <div class="modal-body">
         <div class="form-group">
             <label for="txtDescripcion">Descripción</label>
-            <input id="txtDescripcion" class="form-control" type="text" ng-model="tipo.descripcion" />
+            <input id="txtDescripcion" class="form-control" type="text" ng-model="tipo.descripcion" focus-me="true" 
+                name="tipoDescripcion" required required-message="'Este campo es requerido'" validate-on="blur"  />
         </div>
         <div class="form-group">
             <label for="sltNaturaleza">Naturaleza</label>
             <select id="sltNaturaleza" class="form-control" required
-                ng-options="option for option in ['Software', 'Hardware']" ng-model="tipo.naturaleza">
+                ng-options="option for option in ['Software', 'Hardware']" ng-model="tipo.naturaleza"
+                name="tipoNaturaleza" required required-message="'Este campo es requerido'" validate-on="blur">
                 <option value="">Selecciona uno</option>
             </select>
         </div>
@@ -28,11 +30,19 @@
             <div ui-sortable ng-model="tipo.datos">
                 <p class="input-group" ng-repeat="dato in tipo.datos" 
                    style="padding: 5px 10px; cursor: move;" ng-if="dato.estado_id === 1">
-                    <input type="text" class="form-control" ng-model="dato.descripcion" />
+                    <input type="text" class="form-control" ng-model="dato.descripcion" 
+                        name="tipoDatoDescripcion{{ $index }}" required required-message="'Este campo es requerido'" validate-on="blur"/>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-danger" ng-click="removeDato(dato)">X</button>
                     </span>
                 </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Estado</label>
+            <div>
+                <label><input type="radio" ng-model="tipo.estado_id" ng-value="1"> Activo</label>
+                <label><input type="radio" ng-model="tipo.estado_id" ng-value="2"> Inactivo</label>
             </div>
         </div>
     </div>

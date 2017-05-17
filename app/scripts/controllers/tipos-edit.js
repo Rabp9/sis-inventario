@@ -8,23 +8,26 @@
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-.controller('TiposEditCtrl', function ($scope, tipo_id, $uibModalInstance, TiposService) {
-    TiposService.get({id: tipo_id}, function(data) {
-        $scope.tipo = data.tipo;
+.controller('TiposEditCtrl', function ($scope, tipo_id, $uibModalInstance, TiposService, $utilsViewService) {
+    var tipo = TiposService.get({
+        id: tipo_id
+    }, function() {
+        $scope.tipo = tipo.tipo;
+    }, function(err) {
+        $uibModalInstance.close(err.data);
     });
-
+    
     $scope.cancel = function() {
         $uibModalInstance.dismiss('cancel');
     };
 
     $scope.saveTipo = function(tipo, boton) {
-        $('#' + boton).addClass('disabled');
-        $('#' + boton).prop('disabled', true);
+        $utilsViewService.disable('#' + boton);
         
-        TiposService.save(tipo, function(data) {
-            $('#' + boton).removeClass('disabled');
-            $('#' + boton).prop('disabled', false);
+        TiposService.save(tipo, function (data) {
             $uibModalInstance.close(data);
+        }, function (err) {
+            $uibModalInstance.close(err.data);
         });
     };
     

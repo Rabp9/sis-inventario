@@ -13,7 +13,7 @@
                     <select id="sltTipo" class="form-control"
                         ng-options="tipo.id as tipo.descripcion for tipo in tipos"
                         ng-model="tipo_id">
-                        <option value="">Selecciona un Tipo</option>
+                        <option value="">{{ loading_tipos }}</option>
                     </select>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="showTiposAdd($event)">
@@ -30,7 +30,7 @@
                     <select id="sltMarca" class="form-control"
                         ng-options="marca.id as marca.descripcion for marca in marcas"
                         ng-model="marca_id">
-                        <option value="">Selecciona un Marca</option>
+                        <option value="">{{ loading_marcas }}</option>
                     </select>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="showMarcasAdd($event)">
@@ -50,7 +50,7 @@
             Total de bienes a registrar {{ bienes.length }} 
             <button type="button" ng-click="addBien()"><span class="glyphicon glyphicon-plus"></span></button>
             <scrollable-table watch="bienes" class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th sortable-header col="descripcion">Descripción</th>

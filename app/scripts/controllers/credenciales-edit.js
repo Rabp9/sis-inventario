@@ -8,21 +8,26 @@
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-.controller('CredencialesEditCtrl', function ($scope, credencial, $uibModalInstance, CredencialesService) {
-    $scope.credencial = $.extend(true, {}, credencial);
+.controller('CredencialesEditCtrl', function ($scope, credencial_id, $uibModalInstance, CredencialesService, $utilsViewService) {
+    var credencial = CredencialesService.get({
+        id: credencial_id
+    }, function() {
+        $scope.credencial = credencial.credencial;
+    }, function(err) {
+        $uibModalInstance.close(err.data);
+    });
     
     $scope.cancel = function() {
         $uibModalInstance.dismiss('cancel');
     };
 
     $scope.saveCredencial = function(credencial, boton) {
-        $('#' + boton).addClass('disabled');
-        $('#' + boton).prop('disabled', true);
+        $utilsViewService.disable('#' + boton);
         
         CredencialesService.save(credencial, function(data) {
-            $('#' + boton).removeClass('disabled');
-            $('#' + boton).prop('disabled', false);
             $uibModalInstance.close(data);
+        }, function (err) {
+            $uibModalInstance.close(err.data);    
         });
     };
 });

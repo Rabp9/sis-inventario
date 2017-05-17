@@ -12,6 +12,7 @@ angular.module('sisInventarioFrontendApp')
     $scope.loading = true;
     
     function getMarcas () {
+        $scope.loading = true;
         MarcasService.get(function(data) {
             $scope.marcas = data.marcas;
             $scope.loading = false;

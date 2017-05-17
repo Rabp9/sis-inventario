@@ -9,9 +9,17 @@
  */
 angular.module('sisInventarioFrontendApp')
 .controller('CredencialesCtrl', function ($scope, CredencialesService, $uibModal) {
-    CredencialesService.get(function(data) {
-        $scope.credenciales = data.credenciales;
-    });
+    $scope.loading = true;
+    
+    function getCredenciales() {
+        $scope.loading = true;
+        CredencialesService.get(function(data) {
+            $scope.credenciales = data.credenciales;
+            $scope.loading = false;
+        });
+    }
+    
+    getCredenciales();
         
     $scope.showCredencialesAdd = function() {
         var modalInstanceAdd = $uibModal.open({
@@ -21,29 +29,27 @@ angular.module('sisInventarioFrontendApp')
         });
         
         modalInstanceAdd.result.then(function (data) {
-            $scope.credenciales.push(data.credencial);
-            $scope.message = data.message;
+            getCredenciales();
+            $scope.message = data;
         });
     };
     
     
-    $scope.showCredencialesEdit = function(credencial) {
+    $scope.showCredencialesEdit = function(credencial_id) {
         var modalInstanceEdit = $uibModal.open({
             templateUrl: 'views/credenciales-edit.html',
             controller: 'CredencialesEditCtrl',
             backdrop: false,
             resolve: {
-                credencial: function() {
-                    return credencial;
+                credencial_id: function() {
+                    return credencial_id;
                 }
             }
         });
            
         modalInstanceEdit.result.then(function (data) { 
-            CredencialesService.get(function(data) {
-                $scope.credenciales = data.credenciales;
-            });
-            $scope.message = data.message;
+            getCredenciales();
+            $scope.message = data;
         });
     };
 });

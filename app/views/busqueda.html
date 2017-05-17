@@ -6,50 +6,58 @@
 <hr>
 <div class="row">
     <div class="col-sm-12">
-        Mostrando 
-        <select class="form-control" style="display: inline; width: 80px;"
-            ng-options="size as size for size in [10, 20, 30, 40, 50]" ng-model="maxSize">
-        </select>
-        registros
-        <form class="row">
-            <div class="form-group col-sm-1">
-                <label for="txtSearchCodigo">Código</label>
-                <input id="txtSearchCodigo" class="form-control" type="search" ng-model="codigo_search"/>
+        <form>
+            <div class="row">
+                <div class="form-group col-sm-1">
+                    <label for="txtSearchCodigo">Código</label>
+                    <input id="txtSearchCodigo" class="form-control" type="search" ng-model="codigo_search"/>
+                </div>
+                <div class="form-group col-sm-3">
+                    <label for="txtSearchDescripcion">Descripción</label>
+                    <input id="txtSearchDescripcion" class="form-control" type="search" ng-model="descripcion_search"/>
+                </div>
+                <div class="form-group col-sm-2">
+                    <label for="sltSearchTipo">Tipo</label>
+                    <select id="sltSearchTipo" class="form-control"
+                        ng-options="tipo.id as tipo.descripcion for tipo in tipos"
+                        ng-model="tipo_search" ng-change="selectTipo(tipo_search)">
+                        <option value="">{{ loading_tipos }}</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-2">
+                    <label for="sltMarca">Marca</label>
+                    <select id="sltMarca" class="form-control"
+                        ng-options="marca.id as marca.descripcion for marca in marcas"
+                        ng-model="marca_search">
+                        <option value="">{{ loading_marcas }}</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-2">
+                    <label for="txtSearchModelo">Modelo</label>
+                    <input id="txtSearchModelo" class="form-control" type="search" ng-model="modelo_search"/>
+                </div>
+                <div class="form-group col-sm-2">
+                    <label for="txtSearchSerie">Serie</label>
+                    <input id="txtSearchSerie" class="form-control" type="search" ng-model="serie_search"/>
+                </div>
+                <div class="form-group col-sm-2" ng-repeat="dato in datos">
+                    <label for="txtdato{{ $index }}">{{ dato.descripcion }}</label>
+                    <input id="txtdato{{ $index }}" class="form-control" type="search" ng-model="dato_search[$index]"/>
+                </div>
             </div>
-            <div class="form-group col-sm-3">
-                <label for="txtSearchDescripcion">Descripción</label>
-                <input id="txtSearchDescripcion" class="form-control" type="search" ng-model="descripcion_search"/>
-            </div>
-            <div class="form-group col-sm-2">
-                <label for="sltSearchTipo">Tipo</label>
-                <select id="sltSearchTipo" class="form-control"
-                    ng-options="tipo.id as tipo.descripcion for tipo in tipos"
-                    ng-model="tipo_search" ng-change="selectTipo(tipo_search)">
-                    <option value="">{{ loading_tipos }}</option>
+            <div class="row">
+                <div class="form-group col-sm-1">
+                     <button id="buscarBienes" class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+                </div>
+                Mostrando 
+                <select class="form-control" style="display: inline; width: 80px;"
+                    ng-options="size as size for size in [10, 20, 30, 40, 50]" ng-model="maxSize">
                 </select>
-            </div>
-            <div class="form-group col-sm-2">
-                <label for="sltMarca">Marca</label>
-                <select id="sltMarca" class="form-control"
-                    ng-options="marca.id as marca.descripcion for marca in marcas"
-                    ng-model="marca_search">
-                    <option value="">{{ loading_marcas }}</option>
-                </select>
-            </div>
-            <div class="form-group col-sm-2">
-                <label for="txtSearchModelo">Modelo</label>
-                <input id="txtSearchModelo" class="form-control" type="search" ng-model="modelo_search"/>
-            </div>
-            <div class="form-group col-sm-2">
-                <label for="txtSearchSerie">Serie</label>
-                <input id="txtSearchSerie" class="form-control" type="search" ng-model="serie_search"/>
-            </div>
-            <div class="form-group col-sm-12">
-                 <button id="buscarBienes" class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+                registros
             </div>
         </form>
         <scrollable-table watch="bienes" class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th sortable-header col="id">Código</th>

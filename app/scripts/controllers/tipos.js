@@ -9,9 +9,17 @@
  */
 angular.module('sisInventarioFrontendApp')
 .controller('TiposCtrl', function ($scope, TiposService, $uibModal) {
-    TiposService.get(function(data) {
-        $scope.tipos = data.tipos;
-    });
+    $scope.loading = true;
+    
+    function getTipos() {
+        $scope.loading = true;
+        TiposService.get(function(data) {
+            $scope.tipos = data.tipos;
+            $scope.loading = false;
+        });
+    }
+    
+    getTipos();
     
     $scope.showTiposAdd = function() {
         var modalInstanceAdd = $uibModal.open({
@@ -21,7 +29,7 @@ angular.module('sisInventarioFrontendApp')
         });
         
         modalInstanceAdd.result.then(function (data) {
-            $scope.tipos.push(data.tipo);
+            getTipos();
             $scope.message = data.message;
         });
     };
@@ -40,9 +48,7 @@ angular.module('sisInventarioFrontendApp')
         });
            
         modalInstanceEdit.result.then(function (data) {  
-            TiposService.get(function(data) {
-                $scope.tipos = data.tipos;
-            });
+            getTipos();
             $scope.message = data.message;
         });
     };
