@@ -8,7 +8,9 @@
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-.controller('TiposAddCtrl', function ($scope, $uibModalInstance, TiposService) {
+.controller('TiposAddCtrl', function ($scope, $uibModalInstance, TiposService, 
+    $uibModal, $utilsViewService) {
+        
     $scope.tipo = {};
     $scope.tipo.datos = [];
     
@@ -33,6 +35,21 @@ angular.module('sisInventarioFrontendApp')
             estado_id: 1
         });
         $scope.dato_nuevo_descripcion = '';
+    };
+    
+    $scope.setDetailDato = function(dato) {
+        var modalInstanceAdd = $uibModal.open({
+            templateUrl: 'views/bienes-add.html',
+            controller: 'BienesAddCtrl',
+            backdrop: false
+        });
+        
+        $utilsViewService.enable(event.currentTarget);
+        
+        modalInstanceAdd.result.then(function (data) {
+            getBienes();
+            $scope.message = data;
+        });
     };
     
     $scope.removeDato = function(dato) {
