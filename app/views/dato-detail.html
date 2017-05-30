@@ -1,0 +1,52 @@
+<form novalidate angular-validator angular-validator-submit="saveDatoDetail(dato, 'btnSaveDato')" name="datoDetail" angular-validator-quiet>
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()" data-dismiss="modal" aria-hidden="true"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Detalle de dato</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="txtDescripcion">Descripción</label>
+            <p class="form-control-static">dato-detalle</p>
+        </div>
+        <div class="form-group">
+            <label for="sltTipo">Naturaleza</label>
+            <select id="sltTipo" class="form-control" required
+                ng-options="option for option in ['Número', 'Texto', 'Booleano', 'Lista']" ng-model="dato.tipo"
+                name="datoTipo" required required-message="'Este campo es requerido'" validate-on="blur" >
+                <option value="">Selecciona uno</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="dato.unico"> Único
+                </label>
+            </div>
+        </div>
+        <div ng-show="dato.tipo === 'Lista'" class="form-group">
+            <label for="txtAlternativa">Alternativa nueva</label>
+            <div class="input-group">
+                <input id="txtAlternativa" class="form-control" type="text" ng-model="alternativa_nuevo_descripcion" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" ng-click="addAlternativa(alternativa_nuevo_descripcion)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </span>
+            </div>
+            <div ui-sortable ng-model="dato.alternativas">
+                <p class="input-group" ng-repeat="alternativa in dato.alternativas"
+                    style="padding: 5px 10px; cursor: move;">
+                    <input type="text" class="form-control" ng-model="alternativa.descripcion"
+                        name="tipoAlternativaDescripcion{{ $index }}" required required-message="'Este campo es requerido'" validate-on="blur"  />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" ng-click="removeDato(dato)">X</button>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="cancel()">Cerrar</button>
+        <button id="btnSaveTipo" class="btn btn-success" type="submit">Guardar Tipo</button>
+    </div>
+</form>

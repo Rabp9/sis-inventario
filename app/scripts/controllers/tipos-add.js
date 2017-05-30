@@ -37,18 +37,19 @@ angular.module('sisInventarioFrontendApp')
         $scope.dato_nuevo_descripcion = '';
     };
     
-    $scope.setDetailDato = function(dato) {
+    $scope.setDetailDato = function(dato, event) {
+        $utilsViewService.disable(event.currentTarget);
+        
         var modalInstanceAdd = $uibModal.open({
-            templateUrl: 'views/bienes-add.html',
-            controller: 'BienesAddCtrl',
-            backdrop: false
+            templateUrl: 'views/dato-detail.html',
+            controller: 'DatoDetailCtrl',
+            backdrop: false,
+            size: 'sm'
         });
         
         $utilsViewService.enable(event.currentTarget);
         
         modalInstanceAdd.result.then(function (data) {
-            getBienes();
-            $scope.message = data;
         });
     };
     

@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name sisInventarioFrontendApp.controller:DatoDetailAddCtrl
+ * @name sisInventarioFrontendApp.controller:DatoDetailCtrl
  * @description
- * # DatoDetailAddCtrl
+ * # DatoDetailCtrl
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-  .controller('DatoDetailAddCtrl', function () {
+  .controller('DatoDetailCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
