@@ -19,12 +19,9 @@ angular.module('sisInventarioFrontendApp')
     };
 
     $scope.saveTipo = function(tipo, boton) {
-        $('#' + boton).addClass('disabled');
-        $('#' + boton).prop('disabled', true);
-        
+        $utilsViewService.disable('#' + boton);
+
         TiposService.save(tipo, function(data) {
-            $('#' + boton).removeClass('disabled');
-            $('#' + boton).prop('disabled', false);
             $uibModalInstance.close(data);
         });
     };
@@ -44,12 +41,18 @@ angular.module('sisInventarioFrontendApp')
             templateUrl: 'views/dato-detail.html',
             controller: 'DatoDetailCtrl',
             backdrop: false,
-            size: 'sm'
+            size: 'sm',
+            resolve: {
+                dato: function() {
+                    return dato;
+                }
+            }
         });
         
         $utilsViewService.enable(event.currentTarget);
         
-        modalInstanceAdd.result.then(function (data) {
+        modalInstanceAdd.result.then(function (dato_detailed) {
+            dato = dato_detailed;
         });
     };
     

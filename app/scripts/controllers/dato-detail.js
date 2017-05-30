@@ -8,10 +8,29 @@
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-  .controller('DatoDetailCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+.controller('DatoDetailCtrl', function ($scope, $uibModalInstance, dato, $utilsViewService) {
+    $scope.dato = dato;
+    $scope.dato.alternativas = [];
+    
+    $scope.cancel = function() {
+        $uibModalInstance.dismiss('cancel');
+    };
+    
+    $scope.saveDatoDetail = function(dato, btn) {
+        $utilsViewService.disable('#' + btn);
+        $uibModalInstance.close(dato);
+    };
+    
+    $scope.addAlternativa = function(alternativa_nuevo_descripcion) {
+        $scope.dato.alternativas.push({
+            descripcion: alternativa_nuevo_descripcion,
+            estado_id: 1
+        });
+        $scope.alternativa_nuevo_descripcion = '';
+    };
+    
+    $scope.removeAlternativa = function(alternativa) {
+        var index = $scope.dato.alternativas.indexOf(alternativa);
+        $scope.dato.alternativas.splice(index, 1);
+    };
+});
