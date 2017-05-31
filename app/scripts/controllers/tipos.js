@@ -30,7 +30,7 @@ angular.module('sisInventarioFrontendApp')
         
         modalInstanceAdd.result.then(function (data) {
             getTipos();
-            $scope.message = data.message;
+            $scope.message = data;
         });
     };
     
