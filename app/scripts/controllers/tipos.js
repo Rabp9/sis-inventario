@@ -49,7 +49,7 @@ angular.module('sisInventarioFrontendApp')
            
         modalInstanceEdit.result.then(function (data) {  
             getTipos();
-            $scope.message = data.message;
+            $scope.message = data;
         });
     };
 });

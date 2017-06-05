@@ -8,7 +8,7 @@
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-.controller('TiposEditCtrl', function ($scope, tipo_id, $uibModalInstance, TiposService, $utilsViewService) {
+.controller('TiposEditCtrl', function ($scope, tipo_id, $uibModalInstance, TiposService, $utilsViewService, $uibModal) {
     var tipo = TiposService.get({
         id: tipo_id
     }, function() {
@@ -34,9 +34,32 @@ angular.module('sisInventarioFrontendApp')
     $scope.addDato = function(dato_nuevo_descripcion) {
         $scope.tipo.datos.push({
             descripcion: dato_nuevo_descripcion,
-            estado_id: 1
+            estado_id: 1,
+            alternativas: []
         });
         $scope.dato_nuevo_descripcion = '';
+    };
+    
+    $scope.setDetailDato = function(dato, event) {
+        $utilsViewService.disable(event.currentTarget);
+        
+        var modalInstanceAdd = $uibModal.open({
+            templateUrl: 'views/dato-detail.html',
+            controller: 'DatoDetailCtrl',
+            backdrop: false,
+            size: 'sm',
+            resolve: {
+                dato: function() {
+                    return dato;
+                }
+            }
+        });
+        
+        $utilsViewService.enable(event.currentTarget);
+        
+        modalInstanceAdd.result.then(function (dato_detailed) {
+            dato = dato_detailed;
+        });
     };
     
     $scope.removeDato = function(dato) {

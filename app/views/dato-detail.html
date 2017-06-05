@@ -34,7 +34,7 @@
                 </span>
             </div>
             <div ui-sortable ng-model="dato.alternativas">
-                <p class="input-group" ng-repeat="alternativa in dato.alternativas"
+                <p class="input-group" ng-repeat="alternativa in dato.alternativas" ng-if="alternativa.estado_id === 1"
                     style="padding: 5px 10px; cursor: move;">
                     <input type="text" class="form-control" ng-model="alternativa.descripcion"
                         name="tipoAlternativaDescripcion{{ $index }}" required required-message="'Este campo es requerido'" validate-on="blur"  />

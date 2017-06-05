@@ -10,7 +10,6 @@
 angular.module('sisInventarioFrontendApp')
 .controller('DatoDetailCtrl', function ($scope, $uibModalInstance, dato, $utilsViewService) {
     $scope.dato = dato;
-    $scope.dato.alternativas = [];
     
     $scope.cancel = function() {
         $uibModalInstance.dismiss('cancel');
@@ -30,7 +29,11 @@ angular.module('sisInventarioFrontendApp')
     };
     
     $scope.removeAlternativa = function(alternativa) {
-        var index = $scope.dato.alternativas.indexOf(alternativa);
-        $scope.dato.alternativas.splice(index, 1);
+        if (!alternativa.id) {
+            var index = $scope.dato.alternativas.indexOf(alternativa);
+            $scope.dato.alternativas.splice(index, 1);
+        } else {
+            alternativa.estado_id = 2;
+        }
     };
 });
