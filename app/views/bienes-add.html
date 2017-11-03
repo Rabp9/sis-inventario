@@ -1,4 +1,4 @@
-<form novalidate angular-validator angular-validator-submit="saveBien(bien, 'btnSaveBien')" name="bienAdd" angular-validator-quiet>
+<form novalidate angular-validator angular-validator-submit="saveBien(bien, 'btnSaveBien')" name="bienAdd">
     <div class="modal-header">
         <button type="button" class="close" ng-click="cancel()" data-dismiss="modal" aria-hidden="true"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Nuevo Bien</h4>
@@ -60,8 +60,24 @@
                 <input id="txtCodigoPatrimonial" class="form-control" type="text" ng-model="bien.codigo_patrimonial" />
             </div>
             <div class="form-group col-sm-12" ng-repeat="bien_dato in bien.bien_datos">
-                <label for="bienDato{{$id}}">{{ bien_dato.dato.descripcion }}</label>
-                <input id="bienDato{{$id}}" class="form-control" type="text" ng-model="bien_dato.descripcion" />
+                <label for="bienDato{{$index}}" ng-if="bien_dato.dato.tipo_dato !== 'Booleano'">{{ bien_dato.dato.descripcion }}</label>
+                
+                <input ng-if="bien_dato.dato.tipo_dato === 'Número'" id="bienDato{{$index}}" 
+                    class="form-control" type="number" ng-model="bien_dato.descripcion" name="bienDato{{$index}}" />
+                
+                <input ng-if="bien_dato.dato.tipo_dato === 'Texto'" id="bienDato{{$index}}" 
+                    class="form-control" type="text" ng-model="bien_dato.descripcion" name="bienDato{{$index}}" />
+                
+                <label ng-if="bien_dato.dato.tipo_dato === 'Booleano'">
+                    <input id="bienDato{{$index}}" 
+                    type="checkbox" ng-model="bien_dato.descripcion" name="bienDato{{$index}}" />
+                    {{ bien_dato.dato.descripcion }}
+                </label>
+                <select ng-if="bien_dato.dato.tipo_dato === 'Lista'" id="bienDato{{$index}}" 
+                    class="form-control" ng-options="option.descripcion as option.descripcion for option in bien_dato.dato.alternativas"
+                    ng-model="bien_dato.descripcion" name="bienDato{{$index}}">
+                    <option value="">Selecciona uno</option>
+                </select>
             </div>
         </div>
     </div>

@@ -1,0 +1,6 @@
+1. El administrador debe poder registrar las marcas
+5. El administrador debe poder registrar los bienes (sw t hw)
+3. El administrador debe poder registrar los tipos de dispositvos
+4. El administrador debe poder registrar las credenciales de acceso
+6. El administrador debe poder asignar los equipos a un area y responsable
+7. El administrador debe poder buscar los bienes por tipo, por area, por responsable, por datos.

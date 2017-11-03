@@ -31,7 +31,9 @@ angular.module('sisInventarioFrontendApp')
             $scope.tipo.datos.push({
                 descripcion: dato_nuevo_descripcion,
                 estado_id: 1,
-                alternativas: []
+                alternativas: [],
+                tipo_dato: '',
+                unico: false
             });
             $scope.dato_nuevo_descripcion = '';
         }

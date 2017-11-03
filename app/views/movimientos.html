@@ -1,0 +1,44 @@
+<div class="alert alert-dismissible" ng-class="{'alert-success': message.code === 200, 'alert-danger': message.code !== 200 }" role="alert" ng-show="message.code !== undefined">
+    <button type="button" class="close" ng-click="message.code = undefined" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {{ message.message }} 
+</div>
+<h2>Movimientos</h2>
+<hr>
+<div class="row">
+    <div class="col-sm-12">
+        <button type="button" class="btn btn-primary" ng-click="showCredencialesAdd()"><span class="glyphicon glyphicon-plus"></span> Nueva Credencial</button>
+        <input class="form-control" type="search" ng-model="searchText" placeholder="Buscar...">
+        <scrollable-table watch="bienes" class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th sortable-header col="id">Código</th>
+                        <th sortable-header col="descripcion">Descripción</th>
+                        <th sortable-header col="tipo.descripcion">Tipo</th>
+                        <th sortable-header col="marca.descripcion">Marca</th>
+                        <th sortable-header col="modelo">Modelo</th>
+                        <th sortable-header col="serie">Serie</th>
+                        <th sortable-header col="codigo_patrimonial">Cód. Pat.</th>
+                        <th sortable-header col="area">Área</th>
+                        <th sortable-header col="usuario">Usuario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-show="loading"><td colspan="8">Cargando...</td></tr>
+                    <tr ng-show="!loading && movimientos.length === 0"><td colspan="8">No hay registros</td></tr>
+                    <tr ng-hide="loading" ng-class="{'danger': movimiento.estado_id === 2}" ng-repeat="movimiento in movimientos | searchTextFilter:searchText:['estado_id']" row-id="{{ credencial.id }}">
+                        <td>{{ bien.id }}</td>
+                        <td>{{ bien.descripcion }}</td>
+                        <td>{{ bien.tipo.descripcion }}</td>
+                        <td>{{ bien.marca.descripcion }}</td>
+                        <td>{{ bien.modelo }}</td>
+                        <td>{{ bien.serie }}</td>
+                        <td>{{ bien.codigo_patrimonial }}</td>
+                        <td><button type="button" class="btn btn-primary btn-sm" ng-click="showBienesEdit(bien.id, $event)"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </scrollable-table>
+    </div>
+</div>

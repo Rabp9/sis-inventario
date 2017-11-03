@@ -76,6 +76,15 @@ angular
         title: 'Registrar Lote'
     };
     
+    var movimientosState = {
+        name: 'movimientos',
+        url: '/movimientos',
+        templateUrl: 'views/movimientos.html',
+        controller: 'MovimientosCtrl',
+        controllerAs: 'movimientos',
+        title: 'Movimientos'
+    };
+    
     var busquedaState = {
         name: 'busqueda',
         url: '/busqueda',
@@ -91,6 +100,7 @@ angular
     $stateProvider.state(tiposState);
     $stateProvider.state(bienesState);
     $stateProvider.state(registrarLoteState);
+    $stateProvider.state(movimientosState);
     $stateProvider.state(busquedaState);
     $urlRouterProvider.when('', '/');
 })

@@ -6,40 +6,65 @@
     <div class="modal-body">
         <div class="form-group">
             <label for="txtDescripcion">Descripción</label>
-            <input id="txtDescripcion" class="form-control" type="text" ng-model="tipo.descripcion" focus-me="true" 
+            <input id="txtDescripcion" class="form-control" type="text" ng-model="tipo.descripcion"
                 name="tipoDescripcion" required required-message="'Este campo es requerido'" validate-on="blur"  />
         </div>
         <div class="form-group">
             <label for="sltNaturaleza">Naturaleza</label>
             <select id="sltNaturaleza" class="form-control" required
                 ng-options="option for option in ['Software', 'Hardware']" ng-model="tipo.naturaleza"
-                name="tipoNaturaleza" required required-message="'Este campo es requerido'" validate-on="blur">
+                name="tipoNaturaleza" required-message="'Este campo es requerido'" validate-on="blur">
                 <option value="">Selecciona uno</option>
             </select>
         </div>
         <div class="form-group">
             <label for="txtDato">Dato nuevo</label>
             <div class="input-group">
-                <input id="txtDato" class="form-control" type="text" ng-model="dato_nuevo_descripcion" />
+                <input id="txtDato" class="form-control" type="text" ng-model="dato_nuevo_descripcion"
+                    name="datoNuevoDescripcion"/>
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-primary" ng-click="addDato(dato_nuevo_descripcion)">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
                 </span>
             </div>
-            <div ui-sortable ng-model="tipo.datos">
-                <p class="input-group" ng-repeat="dato in tipo.datos" 
-                   style="padding: 5px 10px; cursor: move;" ng-if="dato.estado_id === 1">
-                    <input type="text" class="form-control" ng-model="dato.descripcion" 
-                        name="tipoDatoDescripcion{{ $index }}" required required-message="'Este campo es requerido'" validate-on="blur"/>
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="setDetailDato(dato, $event)">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                        <button type="button" class="btn btn-danger" ng-click="removeDato(dato)">X</button>
-                    </span>
-                </p>
-            </div>
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>Dato</th>
+                        <th>Tipo de Dato</th>
+                        <th>Único</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody ui-sortable>
+                    <tr ng-repeat="dato in tipo.datos" style="padding: 5px 10px; cursor: move;" ng-if="dato.estado_id === 1">
+                        <td>
+                            <input type="text" class="form-control" ng-model="dato.descripcion"
+                                name="datoDescripcion{{ $index }}" required required-message="'Este campo es requerido'" validate-on="blur"  />
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <select class="form-control"
+                                    ng-options="option for option in ['Número', 'Texto', 'Booleano', 'Lista']" ng-model="dato.tipo_dato"
+                                    name="datoTipoDato{{ $index }}" required required-message="'Este campo es requerido'" validate-on="blur" >
+                                    <option value="">Selecciona uno</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td><input type="checkbox" ng-model="dato.unico" name="datoUnico{{ $index }}"></td>
+                        <td>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-danger" ng-click="removeDato(dato)">X</button>
+                                <button type="button" class="btn btn-default" ng-click="setDetailDato(dato, $event)"
+                                    ng-show="dato.tipo_dato === 'Lista'">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="form-group">
             <label>Estado</label>

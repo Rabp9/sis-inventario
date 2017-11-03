@@ -8,21 +8,6 @@
             <label>Descripción</label>
             <p class="form-control-static">{{ dato.descripcion }}</p>
         </div>
-        <div class="form-group">
-            <label for="sltTipoDato">Tipo de dato</label>
-            <select id="sltTipoDato" class="form-control"
-                ng-options="option for option in ['Número', 'Texto', 'Booleano', 'Lista']" ng-model="dato.tipo_dato"
-                name="datoTipo" required required-message="'Este campo es requerido'" validate-on="blur" >
-                <option value="">Selecciona uno</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" ng-model="dato.unico"> Único
-                </label>
-            </div>
-        </div>
         <div ng-show="dato.tipo_dato === 'Lista'" class="form-group">
             <label for="txtAlternativa">Alternativa nueva</label>
             <div class="input-group">

@@ -15,16 +15,16 @@ angular.module('sisInventarioFrontendApp')
     $scope.loading_marcas = 'Cargando...';
     $scope.message = {};
     
-    var tipos = TiposService.get(function () {
-        $scope.tipos = tipos.tipos;
+    TiposService.get(function (data) {
+        $scope.tipos = data.tipos;
         $scope.loading_tipos = 'Selecciona un Tipo';
     }, function (err) {
         $uibModalInstance.close(err.data);
         $scope.loading_tipos = 'Selecciona un Tipo';
     });
     
-    var marcas = MarcasService.get(function () {
-        $scope.marcas = marcas.marcas;
+    MarcasService.get(function (data) {
+        $scope.marcas = data.marcas;
         $scope.loading_marcas = 'Selecciona una Marca';
     }, function (err) {
         $uibModalInstance.close(err.data);
@@ -57,8 +57,7 @@ angular.module('sisInventarioFrontendApp')
         var modalInstanceAdd = $uibModal.open({
             templateUrl: 'views/tipos-add.html',
             controller: 'TiposAddCtrl',
-            backdrop: false,
-            size: 'sm'
+            backdrop: false
         });
         
         $utilsViewService.enable(event.currentTarget);
@@ -93,7 +92,7 @@ angular.module('sisInventarioFrontendApp')
     $scope.saveBien = function(bien, boton) {
         $utilsViewService.disable('#' + boton);
         
-        var data = BienesService.save(bien, function() {
+        BienesService.save(bien, function(data) {
             $utilsViewService.enable('#' + boton);
             
             $uibModalInstance.close(data);

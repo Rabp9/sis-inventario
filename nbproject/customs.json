@@ -9,6 +9,9 @@
         }
     },
     "attributes": {
+        "ui-sortable": {
+            "context": "tbody"
+        },
         "angular-validator": {},
         "sortable-header": {
             "context": "th"
