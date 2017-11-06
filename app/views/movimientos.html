@@ -27,7 +27,7 @@
                 <tbody>
                     <tr ng-show="loading"><td colspan="8">Cargando...</td></tr>
                     <tr ng-show="!loading && movimientos.length === 0"><td colspan="8">No hay registros</td></tr>
-                    <tr ng-hide="loading" ng-class="{'danger': movimiento.estado_id === 2}" ng-repeat="movimiento in movimientos | searchTextFilter:searchText:['estado_id']" row-id="{{ credencial.id }}">
+                    <tr ng-hide="loading" ng-class="{'danger': bien.estado_id === 2}" ng-repeat="bien in bienes | searchTextFilter:searchText:['estado_id']" row-id="{{ credencial.id }}">
                         <td>{{ bien.id }}</td>
                         <td>{{ bien.descripcion }}</td>
                         <td>{{ bien.tipo.descripcion }}</td>
@@ -35,7 +35,11 @@
                         <td>{{ bien.modelo }}</td>
                         <td>{{ bien.serie }}</td>
                         <td>{{ bien.codigo_patrimonial }}</td>
-                        <td><button type="button" class="btn btn-primary btn-sm" ng-click="showBienesEdit(bien.id, $event)"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                        <td>{{ bien.area }}</td>
+                        <td>{{ bien.ususario }}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm" ng-click="showBienesEdit(bien.id, $event)"><span class="glyphicon glyphicon-pencil"></span></button>
+                        </td>
                     </tr>
                 </tbody>
             </table>

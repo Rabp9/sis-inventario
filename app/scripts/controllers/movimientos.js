@@ -8,10 +8,19 @@
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-  .controller('MovimientosCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+.controller('MovimientosCtrl', function ($scope, BienesService) {
+    
+    $scope.getBienes = function() {
+        $scope.loading = true;
+        BienesService.get({
+            maxSize: $scope.maxSize,
+            page: $scope.page
+        }, function (data) {
+            $scope.bienes = data.bienes;
+            $scope.pagination = data.pagination;
+            $scope.loading = false;
+        });
+    };
+    
+    $scope.getBienes();
+});
