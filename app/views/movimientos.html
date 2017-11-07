@@ -19,8 +19,8 @@
                         <th sortable-header col="modelo">Modelo</th>
                         <th sortable-header col="serie">Serie</th>
                         <th sortable-header col="codigo_patrimonial">Cód. Pat.</th>
-                        <th sortable-header col="area">Área</th>
-                        <th sortable-header col="usuario">Usuario</th>
+                        <th sortable-header col="movimientos[0].area.per_Area">Área</th>
+                        <th sortable-header col="movimientos[0].responsable.full_name">Responsable</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -35,10 +35,12 @@
                         <td>{{ bien.modelo }}</td>
                         <td>{{ bien.serie }}</td>
                         <td>{{ bien.codigo_patrimonial }}</td>
-                        <td>{{ bien.area }}</td>
-                        <td>{{ bien.ususario }}</td>
+                        <td>{{ bien.movimientos[0].area.per_Area }}</td>
+                        <td>{{ bien.movimientos[0].responsable.full_name }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary btn-sm" ng-click="showBienesEdit(bien.id, $event)"><span class="glyphicon glyphicon-pencil"></span></button>
+                            <button type="button" class="btn btn-primary btn-sm" ng-click="showBienesEdit(bien.id, $event)" title="Editar"><span class="glyphicon glyphicon-pencil"></span></button>
+                            <button type="button" class="btn btn-default btn-sm" ng-click="showBienesAsignar(bien.id, $event)" title="Asignar"><span class="glyphicon glyphicon-log-in"></span></button>
+                            <button type="button" class="btn btn-danger btn-sm" ng-click="showBienesDatBaja(bien.id, $event)" title="Dar de baja"><span class="glyphicon glyphicon-log-in"></span></button>
                         </td>
                     </tr>
                 </tbody>

@@ -12,7 +12,7 @@ angular.module('sisInventarioFrontendApp')
     
     $scope.getBienes = function() {
         $scope.loading = true;
-        BienesService.get({
+        BienesService.getBienesMovimientos({
             maxSize: $scope.maxSize,
             page: $scope.page
         }, function (data) {

@@ -13,6 +13,10 @@ angular.module('sisInventarioFrontendApp')
         registrarLote: {
             method: 'POST',
             url: angular.module('sisInventarioFrontendApp').path_location + 'bienes/registrarLote/.json'
+        },
+        getBienesMovimientos: {
+            method: 'GET',
+            url: angular.module('sisInventarioFrontendApp').path_location + 'bienes/getBienesMovimientos/.json'
         }
     });
 });
