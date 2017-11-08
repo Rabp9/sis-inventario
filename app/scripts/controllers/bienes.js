@@ -13,7 +13,7 @@ angular.module('sisInventarioFrontendApp')
     $scope.page = 1;
     $scope.loading = false;
     
-    function getBienes() {
+    $scope.getBienes = function() {
         $scope.loading = true;
         var data = BienesService.get({
             maxSize: $scope.maxSize,
@@ -26,9 +26,9 @@ angular.module('sisInventarioFrontendApp')
             $scope.message = err.data;
             $scope.loading = false;
         });
-    }
+    };
     
-    getBienes();
+    $scope.getBienes();
     
     $scope.$watch('maxSize', function(newValue, oldValue) {
         $scope.page = 1;

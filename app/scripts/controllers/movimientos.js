@@ -8,7 +8,8 @@
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-.controller('MovimientosCtrl', function ($scope, BienesService) {
+.controller('MovimientosCtrl', function ($scope, BienesService, $utilsViewService,
+    $uibModal) {
     
     $scope.getBienes = function() {
         $scope.loading = true;
@@ -19,6 +20,28 @@ angular.module('sisInventarioFrontendApp')
             $scope.bienes = data.bienes;
             $scope.pagination = data.pagination;
             $scope.loading = false;
+        });
+    };
+    
+    $scope.showBienesAsignar = function(bien_id, event) {
+        $utilsViewService.disable(event.currentTarget);
+        
+        var modalInstanceAsignar = $uibModal.open({
+            templateUrl: 'views/bienes-asignar.html',
+            controller: 'BienesAsignarCtrl',
+            backdrop: false,
+            resolve: {
+                bien_id: function() {
+                    return bien_id;
+                }
+            }
+        });
+        
+        $utilsViewService.enable(event.currentTarget);
+        
+        modalInstanceAsignar.result.then(function (data) {
+            getBienes();
+            $scope.message = data;
         });
     };
     

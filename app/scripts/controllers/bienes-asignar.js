@@ -8,10 +8,15 @@
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-  .controller('BienesAsignarCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+.controller('BienesAsignarCtrl', function ($scope, bien_id, BienesService, MovimientosService) {
+    $scope.init = function() {
+        BienesService.get({id: bien_id}, function(data) {
+            $scope.bien = data.bien;
+            MovimientosService.getByBien({bien_id: bien_id}, function(data) {
+                $scope.movimientos = data.movimientos;
+            });
+        });
+    };
+    
+    $scope.init();
+});

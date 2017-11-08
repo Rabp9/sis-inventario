@@ -1,1 +1,52 @@
-<p>This is the bienes-asignar view.</p>
+<form novalidate angular-validator angular-validator-submit="saveAsignacion(bien, 'btnSaveMovimiento')" name="bienAsignar">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()" data-dismiss="modal" aria-hidden="true"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Aignar Bien</h4>
+    </div>
+    <div class="modal-body">
+        <div class="alert alert-dismissible" ng-class="{'alert-success': message.code === 200, 'alert-danger': message.code !== 200 }" role="alert" ng-show="message.code !== undefined">
+            <button type="button" class="close" ng-click="message.code = undefined" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ message.message }}
+        </div>
+        <div class="row">
+            <div>
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#asignacion-add" aria-controls="asignacion-add" role="tab" data-toggle="tab">Nueva Asignación</a></li>
+                    <li role="presentation"><a href="#movimientos" aria-controls="movimientos" role="tab" data-toggle="tab">Movimientos</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="asignacion-add">
+                        
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade container" id="movimientos">
+                        Todos los Movimientos
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>F. Inicio</th>
+                                    <th>F. Fin</th>
+                                    <th>Área</th>
+                                    <th>Responsable</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="movimiento in movimientos">
+                                    <td>{{ movimiento.fecha_inicio }}</td>
+                                    <td>{{ movimiento.fecha_fin }}</td>
+                                    <td>{{ movimiento.area.per_Area}}</td>
+                                    <td>{{ movimiento.responsable.full_name }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="cancel()">Cerrar</button>
+        <button id="btnSaveMovimiento" class="btn btn-success" type="submit">Guardar Asignación</button>
+    </div>
+</form>
