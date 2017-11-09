@@ -8,16 +8,11 @@
  * Factory in the sisInventarioApp.
  */
 angular.module('sisInventarioFrontendApp')
-  .factory('movimientosService', function () {
-    // Service logic
-    // ...
-
-    var meaningOfLife = 42;
-
-    // Public API here
-    return {
-      someMethod: function () {
-        return meaningOfLife;
-      }
-    };
-  });
+.factory('MovimientosService', function ($resource) {
+    return $resource(angular.module('sisInventarioFrontendApp').path_location + 'movimientos/:id.json', {}, {
+        getByBien: {
+            method: 'GET',
+            url: angular.module('sisInventarioFrontendApp').path_location + 'movimientos/getByBien/:bien_id.json'
+        }
+    });
+});

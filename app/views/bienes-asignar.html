@@ -8,38 +8,46 @@
             <button type="button" class="close" ng-click="message.code = undefined" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             {{ message.message }}
         </div>
-        <div class="row">
-            <div>
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#asignacion-add" aria-controls="asignacion-add" role="tab" data-toggle="tab">Nueva Asignación</a></li>
-                    <li role="presentation"><a href="#movimientos" aria-controls="movimientos" role="tab" data-toggle="tab">Movimientos</a></li>
-                </ul>
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active" id="asignacion-add">
-                        
+        <div>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a data-target="#asignacion-add" aria-controls="asignacion-add" role="tab" data-toggle="tab">Nueva Asignación</a></li>
+                <li role="presentation"><a data-target="#movimientos" aria-controls="movimientos" role="tab" data-toggle="tab">Movimientos</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="asignacion-add">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            
+                        </div>
                     </div>
-                    <div role="tabpanel" class="tab-pane fade container" id="movimientos">
-                        Todos los Movimientos
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>F. Inicio</th>
-                                    <th>F. Fin</th>
-                                    <th>Área</th>
-                                    <th>Responsable</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="movimiento in movimientos">
-                                    <td>{{ movimiento.fecha_inicio }}</td>
-                                    <td>{{ movimiento.fecha_fin }}</td>
-                                    <td>{{ movimiento.area.per_Area}}</td>
-                                    <td>{{ movimiento.responsable.full_name }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="movimientos">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            Todos los Movimientos
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>F. Inicio</th>
+                                            <th>F. Fin</th>
+                                            <th>Área</th>
+                                            <th>Responsable</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="movimiento in movimientos">
+                                            <td>{{ movimiento.fecha_inicio }}</td>
+                                            <td>{{ movimiento.fecha_fin }}</td>
+                                            <td>{{ movimiento.area.per_Area}}</td>
+                                            <td>{{ movimiento.responsable.full_name }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
