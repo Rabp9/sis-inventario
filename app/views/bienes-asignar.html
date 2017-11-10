@@ -11,15 +11,93 @@
         <div>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a data-target="#asignacion-add" aria-controls="asignacion-add" role="tab" data-toggle="tab">Nueva Asignación</a></li>
-                <li role="presentation"><a data-target="#movimientos" aria-controls="movimientos" role="tab" data-toggle="tab">Movimientos</a></li>
+                <li role="presentation" class="active" style="cursor: pointer;"><a data-target="#asignacion-add" aria-controls="asignacion-add" role="tab" data-toggle="tab">Nueva Asignación</a></li>
+                <li role="presentation" style="cursor: pointer;"><a data-target="#movimientos" aria-controls="movimientos" role="tab" data-toggle="tab">Movimientos</a></li>
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="asignacion-add">
                     <div class="row">
-                        <div class="col-sm-6">
-                            
+                        <div class="col-sm-5">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Origen
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="txtAreaOrigen">Área</label>
+                                                <p ng-show="loading">Cargando...</p>
+                                                <input ng-show="!loading && movimientos.length !== 0" id="txtAreaOrigen" type="text" class="form-control" ng-model="movimientos[0].area.per_Area" readonly>
+                                                <p ng-show="!loading && movimientos.length === 0">No se ha asignado a ninguna Área</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="txtResponsableOrigen">Responsable</label>
+                                                <p ng-show="loading">Cargando...</p>
+                                                <input ng-show="!loading && movimientos.length !== 0" id="txtResponsableOrigen" type="text" class="form-control" ng-model="movimientos[0].persona_responsable.full_name" readonly>
+                                                <p ng-show="!loading && movimientos.length === 0">No se ha asignado a ningún Responsable</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <button class="btn btn-default btn-lg">
+                                <span class="glyphicon glyphicon-arrow-right"></span>
+                            </button>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Destino
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label ng-click="setSelectAreaFocus()">Área</label>
+                                                <ui-select focus-on="UiSelectArea" ng-model="movimiento.area_id"
+                                                    theme="bootstrap"
+                                                    reset-search-input="false"
+                                                    title="Selecciona un Área"
+                                                    append-to-body="false">
+                                                    <ui-select-match placeholder="Ingresa un Área...">{{$select.selected.per_Area}}</ui-select-match>
+                                                    <ui-select-choices repeat="area in areas track by $index"
+                                                        refresh="refreshAreas($select.search)"
+                                                        refresh-delay="0">
+                                                        <div ng-bind-html="area.per_Area | highlight: $select.search"></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label ng-click="setSelectResponsableFocus()">Responsable</label>
+                                                <ui-select focus-on="UiSelectResponsable" ng-model="movimiento.responsable"
+                                                    theme="bootstrap"
+                                                    reset-search-input="false"
+                                                    title="Selecciona una Persona"
+                                                    append-to-body="false">
+                                                    <ui-select-match placeholder="Ingresa una Persona...">{{$select.selected.full_name}}</ui-select-match>
+                                                    <ui-select-choices repeat="persona in personas track by $index"
+                                                        refresh="refreshPersonas($select.search)"
+                                                        refresh-delay="0">
+                                                        <div ng-bind-html="persona.full_name | highlight: $select.search"></div>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -42,7 +120,7 @@
                                             <td>{{ movimiento.fecha_inicio }}</td>
                                             <td>{{ movimiento.fecha_fin }}</td>
                                             <td>{{ movimiento.area.per_Area}}</td>
-                                            <td>{{ movimiento.responsable.full_name }}</td>
+                                            <td>{{ movimiento.persona_responsable.full_name }}</td>
                                         </tr>
                                     </tbody>
                                 </table>

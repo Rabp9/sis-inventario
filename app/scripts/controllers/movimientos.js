@@ -30,6 +30,7 @@ angular.module('sisInventarioFrontendApp')
             templateUrl: 'views/bienes-asignar.html',
             controller: 'BienesAsignarCtrl',
             backdrop: false,
+            size: 'lg',
             resolve: {
                 bien_id: function() {
                     return bien_id;

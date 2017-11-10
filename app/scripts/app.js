@@ -19,7 +19,8 @@ angular
     'ui.bootstrap',
     'ui.sortable',
     'scrollable-table',
-    'angularValidator'
+    'angularValidator',
+    'ui.select'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
     var mainState = {
