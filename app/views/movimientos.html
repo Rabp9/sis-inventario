@@ -36,7 +36,7 @@
                         <td>{{ bien.serie }}</td>
                         <td>{{ bien.codigo_patrimonial }}</td>
                         <td>{{ bien.movimientos[0].area.per_Area }}</td>
-                        <td>{{ bien.movimientos[0].responsable.full_name }}</td>
+                        <td>{{ bien.movimientos[0].persona_responsable.full_name }}</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-sm" ng-click="showBienesEdit(bien.id, $event)" title="Editar"><span class="glyphicon glyphicon-pencil"></span></button>
                             <button type="button" class="btn btn-default btn-sm" ng-click="showBienesAsignar(bien.id, $event)" title="Asignar"><span class="glyphicon glyphicon-log-in"></span></button>

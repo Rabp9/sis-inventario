@@ -9,8 +9,10 @@
  */
 angular.module('sisInventarioFrontendApp')
 .controller('BienesAsignarCtrl', function ($scope, bien_id, BienesService, MovimientosService,
-    $uibModalInstance, AreasService, PersonasService) {
-        
+    $uibModalInstance, AreasService, PersonasService, $utilsViewService) {
+    
+    $scope.movimiento = {};
+    
     $scope.init = function() {
         $scope.loading = true;
         BienesService.get({id: bien_id}, function(data) {
@@ -49,6 +51,32 @@ angular.module('sisInventarioFrontendApp')
     $scope.setSelectResponsableFocus = function() {
         $scope.$broadcast('UiSelectResponsable');
     };
+    
+    $scope.saveAsignacion = function(movimiento, boton, fecha_pre, bien) {
+        $utilsViewService.disable('#' + boton);
+        
+        if ($scope.fecha_pre !== null) {
+            movimiento.fecha_inicio = formatDate($scope.fecha_pre);
+        }
+        movimiento.bien_id = bien.id;
+        movimiento.user_id = 1;
+        MovimientosService.save(movimiento, function (data) {
+            $uibModalInstance.close(data);
+        }, function (err) {
+            $uibModalInstance.close(err.data);
+        });
+    };
   
     $scope.init();
+    
+    function formatDate(fecha) {
+        if (fecha === undefined) {
+            return undefined;
+        }
+        return fecha.getFullYear() + '-' + str_pad((fecha.getMonth() + 1), '00') + '-' + str_pad(fecha.getDate(), '00');
+    }
+    
+    function str_pad(str, pad) {
+        return pad.substring(0, (pad.length - str.toString().length)) + str;
+    }
 });

@@ -1,4 +1,4 @@
-<form novalidate angular-validator angular-validator-submit="saveAsignacion(bien, 'btnSaveMovimiento')" name="bienAsignar">
+<form novalidate angular-validator angular-validator-submit="saveAsignacion(movimiento, 'btnSaveMovimiento', fecha_pre, bien)" name="bienAsignar">
     <div class="modal-header">
         <button type="button" class="close" ng-click="cancel()" data-dismiss="modal" aria-hidden="true"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Aignar Bien</h4>
@@ -12,11 +12,19 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active" style="cursor: pointer;"><a data-target="#asignacion-add" aria-controls="asignacion-add" role="tab" data-toggle="tab">Nueva Asignación</a></li>
-                <li role="presentation" style="cursor: pointer;"><a data-target="#movimientos" aria-controls="movimientos" role="tab" data-toggle="tab">Movimientos</a></li>
+                <li role="presentation" style="cursor: pointer;"><a data-target="#asignaciones" aria-controls="asignaciones" role="tab" data-toggle="tab">Asignaciones</a></li>
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="asignacion-add">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="dtFechaInicio">Fecha de Inicio</label>
+                                <input id="dtFechaInicio" type="date" class="form-control" ng-model="fecha_pre">
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-sm-5">
                             <div class="panel panel-default">
@@ -48,9 +56,7 @@
                             </div>
                         </div>
                         <div class="col-sm-2">
-                            <button class="btn btn-default btn-lg">
-                                <span class="glyphicon glyphicon-arrow-right"></span>
-                            </button>
+                            <img class="img-responsive" src="images/arrow-right.jpg" alt="Asignar">
                         </div>
                         <div class="col-sm-5">
                             <div class="panel panel-default">
@@ -68,7 +74,7 @@
                                                     title="Selecciona un Área"
                                                     append-to-body="false">
                                                     <ui-select-match placeholder="Ingresa un Área...">{{$select.selected.per_Area}}</ui-select-match>
-                                                    <ui-select-choices repeat="area in areas track by $index"
+                                                    <ui-select-choices repeat="area.cod_Parea as area in areas track by $index"
                                                         refresh="refreshAreas($select.search)"
                                                         refresh-delay="0">
                                                         <div ng-bind-html="area.per_Area | highlight: $select.search"></div>
@@ -87,7 +93,7 @@
                                                     title="Selecciona una Persona"
                                                     append-to-body="false">
                                                     <ui-select-match placeholder="Ingresa una Persona...">{{$select.selected.full_name}}</ui-select-match>
-                                                    <ui-select-choices repeat="persona in personas track by $index"
+                                                    <ui-select-choices repeat="persona.PerCod as persona in personas track by $index"
                                                         refresh="refreshPersonas($select.search)"
                                                         refresh-delay="0">
                                                         <div ng-bind-html="persona.full_name | highlight: $select.search"></div>
@@ -101,10 +107,10 @@
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane fade" id="movimientos">
+                <div role="tabpanel" class="tab-pane fade" id="asignaciones">
                     <div class="row">
                         <div class="col-sm-12">
-                            Todos los Movimientos
+                            Todos las Asignaciones
                             <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
