@@ -11,7 +11,13 @@ angular.module('sisInventarioFrontendApp')
 .controller('MovimientosCtrl', function ($scope, BienesService, $utilsViewService,
     $uibModal) {
     
+    $scope.search = {};
+    $scope.search.text = '';
+    $scope.page = 1;
+    $scope.items_per_page = 10;
+    
     $scope.getBienes = function() {
+        $scope.bienes = [];
         $scope.loading = true;
         BienesService.getBienesMovimientos({
             maxSize: $scope.maxSize,
@@ -22,6 +28,11 @@ angular.module('sisInventarioFrontendApp')
             $scope.loading = false;
         });
     };
+    
+    $scope.$watch('search.text', function(oldValue, newValue) {
+        $scope.page = 1;
+        $scope.getProgramaciones();
+    });
     
     $scope.showBienesAsignar = function(bien_id, event) {
         $utilsViewService.disable(event.currentTarget);
@@ -41,7 +52,7 @@ angular.module('sisInventarioFrontendApp')
         $utilsViewService.enable(event.currentTarget);
         
         modalInstanceAsignar.result.then(function (data) {
-            getBienes();
+            $scope.getBienes();
             $scope.message = data;
         });
     };

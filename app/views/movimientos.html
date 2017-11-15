@@ -6,7 +6,6 @@
 <hr>
 <div class="row">
     <div class="col-sm-12">
-        <button type="button" class="btn btn-primary" ng-click="showCredencialesAdd()"><span class="glyphicon glyphicon-plus"></span> Nueva Credencial</button>
         <input class="form-control" type="search" ng-model="searchText" placeholder="Buscar...">
         <scrollable-table watch="bienes" class="table-responsive">
             <table class="table table-bordered">
@@ -26,8 +25,8 @@
                 </thead>
                 <tbody>
                     <tr ng-show="loading"><td colspan="8">Cargando...</td></tr>
-                    <tr ng-show="!loading && movimientos.length === 0"><td colspan="8">No hay registros</td></tr>
-                    <tr ng-hide="loading" ng-class="{'danger': bien.estado_id === 2}" ng-repeat="bien in bienes | searchTextFilter:searchText:['estado_id']" row-id="{{ credencial.id }}">
+                    <tr ng-show="!loading && bienes.length === 0"><td colspan="8">No hay registros</td></tr>
+                    <tr ng-hide="loading" ng-class="{'danger': bien.estado_id === 2}" ng-repeat="bien in bienes | searchTextFilter:searchText:['estado_id']" row-id="{{ bien.id }}">
                         <td>{{ bien.id }}</td>
                         <td>{{ bien.descripcion }}</td>
                         <td>{{ bien.tipo.descripcion }}</td>

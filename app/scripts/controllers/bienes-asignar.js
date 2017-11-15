@@ -60,6 +60,7 @@ angular.module('sisInventarioFrontendApp')
         }
         movimiento.bien_id = bien.id;
         movimiento.user_id = 1;
+        movimiento.estado_id = 1;
         MovimientosService.save(movimiento, function (data) {
             $uibModalInstance.close(data);
         }, function (err) {
