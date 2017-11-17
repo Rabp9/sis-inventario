@@ -6,7 +6,7 @@
 <hr>
 <div class="row">
     <div class="col-sm-12">
-        <input class="form-control" type="search" ng-model="searchText" placeholder="Buscar...">
+        <input class="form-control" placeholder="Buscar..." ng-model="search.text" />
         <scrollable-table watch="bienes" class="table-responsive">
             <table class="table table-bordered">
                 <thead>
@@ -45,5 +45,11 @@
                 </tbody>
             </table>
         </scrollable-table>
+        
+        <ul uib-pagination total-items="pagination.totalItems" first-text="Primero" 
+            last-text="Último" next-text="Siguiente" previous-text="Anterior"
+            items-per-page="pagination.itemsPerPage" ng-model="page" 
+            class="pagination-sm" boundary-links="true" force-ellipses="true"
+            ng-change="pageChanged()"></ul>
     </div>
 </div>

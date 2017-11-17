@@ -14,14 +14,15 @@ angular.module('sisInventarioFrontendApp')
     $scope.search = {};
     $scope.search.text = '';
     $scope.page = 1;
-    $scope.items_per_page = 10;
+    $scope.maxSize = 10;
     
     $scope.getBienes = function() {
         $scope.bienes = [];
         $scope.loading = true;
         BienesService.getBienesMovimientos({
             maxSize: $scope.maxSize,
-            page: $scope.page
+            page: $scope.page,
+            search: $scope.search.text
         }, function (data) {
             $scope.bienes = data.bienes;
             $scope.pagination = data.pagination;
@@ -31,8 +32,12 @@ angular.module('sisInventarioFrontendApp')
     
     $scope.$watch('search.text', function(oldValue, newValue) {
         $scope.page = 1;
-        $scope.getProgramaciones();
+        $scope.getBienes();
     });
+    
+    $scope.pageChanged = function() {
+        $scope.getBienes();
+    };
     
     $scope.showBienesAsignar = function(bien_id, event) {
         $utilsViewService.disable(event.currentTarget);
@@ -56,6 +61,4 @@ angular.module('sisInventarioFrontendApp')
             $scope.message = data;
         });
     };
-    
-    $scope.getBienes();
 });
