@@ -6,12 +6,17 @@
 <hr>
 <div class="row">
     <div class="col-sm-12">
-        <button type="button" class="btn btn-primary" ng-click="showBienesAdd($event)"><span class="glyphicon glyphicon-plus"></span> Nuevo Bien</button>
-        Mostrando 
-        <select class="form-control" style="display: inline; width: 80px;"
-            ng-options="size as size for size in [10, 20, 30, 40, 50]" ng-model="maxSize">
-        </select>
-        registros
+        <form class="form-inline">
+            <input class="form-control" placeholder="Buscar..." ng-model="search.text"/>
+            <button type="button" class="btn btn-primary" ng-click="showBienesAdd($event)"><span class="glyphicon glyphicon-plus"></span> Nuevo Bien</button>
+            <span class="pull-right">
+                Mostrando 
+                <select class="form-control" style="display: inline; width: 80px;"
+                    ng-options="size as size for size in [10, 20, 30, 40, 50]" ng-model="maxSize">
+                </select>
+                registros
+            </span>
+        </form>
         <scrollable-table watch="bienes" class="table-responsive">
             <table class="table table-bordered">
                 <thead>
@@ -23,13 +28,15 @@
                         <th sortable-header col="modelo">Modelo</th>
                         <th sortable-header col="serie">Serie</th>
                         <th sortable-header col="codigo_patrimonial">Cód. Pat.</th>
+                        <th sortable-header col="movimientos[0].area.per_Area">Área</th>
+                        <th sortable-header col="movimientos[0].responsable.full_name">Responsable</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-show="loading"><td colspan="8">Cargando...</td></tr>
-                    <tr ng-show="!loading && bienes.length === 0"><td colspan="8">No hay registros</td></tr>
-                    <tr ng-show="!loading" ng-class="{'danger': bien.estado_id == 2}" ng-repeat="bien in bienes" row-id="{{ bien.id }}">
+                    <tr ng-show="loading"><td colspan="9">Cargando...</td></tr>
+                    <tr ng-show="!loading && bienes.length === 0"><td colspan="9">No hay registros</td></tr>
+                    <tr ng-hide="loading" ng-class="{'danger': bien.estado_id === 2}" ng-repeat="bien in bienes | searchTextFilter:searchText:['estado_id']" row-id="{{ bien.id }}">
                         <td>{{ bien.id }}</td>
                         <td>{{ bien.descripcion }}</td>
                         <td>{{ bien.tipo.descripcion }}</td>
@@ -37,7 +44,13 @@
                         <td>{{ bien.modelo }}</td>
                         <td>{{ bien.serie }}</td>
                         <td>{{ bien.codigo_patrimonial }}</td>
-                        <td><button type="button" class="btn btn-primary btn-sm" ng-click="showBienesEdit(bien.id, $event)"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                        <td>{{ bien.movimientos[0].area.per_Area }}</td>
+                        <td>{{ bien.movimientos[0].persona_responsable.full_name }}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm" ng-click="showBienesEdit(bien.id, $event)" title="Editar"><span class="glyphicon glyphicon-pencil"></span></button>
+                            <button type="button" class="btn btn-default btn-sm" ng-click="showBienesAsignar(bien.id, $event)" title="Asignar"><span class="glyphicon glyphicon-log-in"></span></button>
+                            <button type="button" class="btn btn-danger btn-sm" ng-click="showBienesDatBaja(bien.id, $event)" title="Dar de baja"><span class="glyphicon glyphicon-log-in"></span></button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
