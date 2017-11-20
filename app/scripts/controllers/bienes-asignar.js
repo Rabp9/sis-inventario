@@ -18,7 +18,7 @@ angular.module('sisInventarioFrontendApp')
     $scope.init = function() {
         $scope.loading = true;
         BienesService.get({id: bien_id}, function(data) {
-            $scope.bien = data.bien
+            $scope.bien = data.bien;
             $scope.loading = false;
             $scope.getMovimientos();
         });
