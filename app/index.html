@@ -2,7 +2,7 @@
 <html ng-app="sisInventarioFrontendApp">
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title ng-bind="title + ' - Sistema de Inventario'">Sistema de Inventario</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -52,7 +52,6 @@
                         </li>
                         <li ui-sref-active="active"><a ui-sref="bienes">Bienes</a></li>
                         <li ui-sref-active="active"><a ui-sref="registrar-lote">Registrar Lote de Bienes</a></li>
-                        <li ui-sref-active="active"><a ui-sref="busqueda">Búsqueda</a></li>
                     </ul>
                 </div>
             </div>
@@ -92,7 +91,6 @@
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/busqueda.js"></script>
         <script src="scripts/controllers/definir-areas.js"></script>
         <script src="scripts/controllers/definir-usuarios.js"></script>
         <script src="scripts/controllers/bienes.js"></script>
@@ -122,7 +120,9 @@
         <script src="scripts/services/datosservice.js"></script>
         <script src="scripts/controllers/bienes-asignar.js"></script>
         <script src="scripts/services/areasservice.js"></script>
+        <script src="scripts/services/movimientosservice.js"></script>
         <script src="scripts/services/personasservice.js"></script>
+        <script src="scripts/services/envservice.js"></script>
         <!-- endbuild -->
 </body>
 </html>

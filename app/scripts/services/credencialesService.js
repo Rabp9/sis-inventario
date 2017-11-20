@@ -8,6 +8,6 @@
  * Factory in the sisInventarioApp.
  */
 angular.module('sisInventarioFrontendApp')
-.factory('CredencialesService', function ($resource) {
-    return $resource(angular.module('sisInventarioFrontendApp').path_location + 'credenciales/:id.json');
+.factory('CredencialesService', function ($resource, EnvService) {
+    return $resource(EnvService.getHost() + 'credenciales/:id.json');
 });

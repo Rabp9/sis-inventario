@@ -12,15 +12,15 @@ angular.module('sisInventarioFrontendApp')
     $uibModalInstance, AreasService, PersonasService, $utilsViewService) {
     
     $scope.movimiento = {};
+    $scope.page = 1;
+    $scope.maxSize = 10;
     
     $scope.init = function() {
         $scope.loading = true;
         BienesService.get({id: bien_id}, function(data) {
-            $scope.bien = data.bien;
-            MovimientosService.getByBien({bien_id: bien_id}, function(data) {
-                $scope.loading = false;
-                $scope.movimientos = data.movimientos;
-            });
+            $scope.bien = data.bien
+            $scope.loading = false;
+            $scope.getMovimientos();
         });
     };
     
@@ -36,6 +36,11 @@ angular.module('sisInventarioFrontendApp')
         }
     };
   
+    $scope.$watch('maxSize', function(newValue, oldValue) {
+        $scope.page = 1;
+        $scope.getMovimientos();
+    });
+    
     $scope.setSelectAreaFocus = function() {
         $scope.$broadcast('UiSelectArea');
     };
@@ -68,7 +73,25 @@ angular.module('sisInventarioFrontendApp')
         });
     };
   
+    $scope.getMovimientos = function() {
+        $scope.movimientos = [];
+        $scope.loading_movimientos = true;
+        MovimientosService.getByBien({
+            bien_id: bien_id,
+            maxSize: $scope.maxSize,
+            page: $scope.page,
+        }, function (data) {
+            $scope.movimientos = data.movimientos;
+            $scope.pagination = data.pagination;
+            $scope.loading_movimientos = false;
+        });
+    };
+    
     $scope.init();
+    
+    $scope.pageChanged = function() {
+        $scope.getMovimientos();
+    };
     
     function formatDate(fecha) {
         if (fecha === undefined) {

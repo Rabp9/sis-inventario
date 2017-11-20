@@ -8,6 +8,6 @@
  * Factory in the sisInventarioApp.
  */
 angular.module('sisInventarioFrontendApp')
-.factory('TiposService', function ($resource) {
-    return $resource(angular.module('sisInventarioFrontendApp').path_location + 'tipos/:id.json');
+.factory('TiposService', function ($resource, EnvService) {
+    return $resource(EnvService.getHost() + 'tipos/:id.json');
 });

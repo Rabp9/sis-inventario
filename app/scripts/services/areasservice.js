@@ -8,11 +8,11 @@
  * Factory in the sisInventarioFrontendApp.
  */
 angular.module('sisInventarioFrontendApp')
-.factory('AreasService', function ($resource) {
-    return $resource(angular.module('sisInventarioFrontendApp').path_location + 'areas/:id.json', {}, {
+.factory('AreasService', function ($resource, EnvService) {
+    return $resource(EnvService.getHost() + 'areas/:id.json', {}, {
         search: {
             method: 'GET',
-            url: angular.module('sisInventarioFrontendApp').path_location + 'areas/search/:search.json'
+            url: EnvService.getHost() + 'areas/search/:search.json'
         }
     });
 });

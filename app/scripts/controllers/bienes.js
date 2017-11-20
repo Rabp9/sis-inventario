@@ -12,6 +12,7 @@ angular.module('sisInventarioFrontendApp')
     
     $scope.search = {};
     $scope.search.text = '';
+    $scope.search.estado_id = '1';
     $scope.page = 1;
     $scope.maxSize = 10;
     
@@ -21,7 +22,8 @@ angular.module('sisInventarioFrontendApp')
         BienesService.getBienesMovimientos({
             maxSize: $scope.maxSize,
             page: $scope.page,
-            search: $scope.search.text
+            search: $scope.search.text,
+            estado_id: $scope.search.estado_id
         }, function (data) {
             $scope.bienes = data.bienes;
             $scope.pagination = data.pagination;
@@ -32,6 +34,11 @@ angular.module('sisInventarioFrontendApp')
     $scope.getBienes();
     
     $scope.$watch('search.text', function(oldValue, newValue) {
+        $scope.page = 1;
+        $scope.getBienes();
+    });
+    
+    $scope.$watch('search.estado_id', function(oldValue, newValue) {
         $scope.page = 1;
         $scope.getBienes();
     });
@@ -76,7 +83,7 @@ angular.module('sisInventarioFrontendApp')
         $utilsViewService.enable(event.currentTarget);
         
         modalInstanceAdd.result.then(function (data) {
-            getBienes();
+            $scope.getBienes();
             $scope.message = data;
         });
     };
@@ -98,10 +105,23 @@ angular.module('sisInventarioFrontendApp')
         $utilsViewService.enable(event.currentTarget);
            
         modalInstanceEdit.result.then(function (data) {
-            getBienes();
+            $scope.getBienes();
             $scope.message = data;
         });
     };
+    
+    $scope.showBienesDarBaja = function(bien_id, event) {
+        $utilsViewService.disable(event.currentTarget);
+        
+        if (confirm('¿Está seguro de dar de baja este bien?')) {
+            BienesService.darBaja({id: bien_id}, function(data) {
+                $scope.getBienes();
+                $scope.message = data;
+            });
+        }
+        $utilsViewService.enable(event.currentTarget);
+    };
+    
     
     $scope.pageChanged = function() {
         $scope.getBienes();

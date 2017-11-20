@@ -8,6 +8,6 @@
  * Factory in the sisInventarioApp.
  */
 angular.module('sisInventarioFrontendApp')
-.factory('MarcasService', function ($resource) {
-    return $resource(angular.module('sisInventarioFrontendApp').path_location + 'marcas/:id.json');
+.factory('MarcasService', function ($resource, EnvService) {
+    return $resource(EnvService.getHost() + 'marcas/:id.json');
 });
