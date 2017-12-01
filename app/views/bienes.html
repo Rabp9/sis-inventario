@@ -11,19 +11,30 @@
             <button type="button" class="btn btn-primary" ng-click="showBienesAdd($event)"><span class="glyphicon glyphicon-plus"></span> Nuevo Bien</button>
             <div class="radio">
                 <label>
-                    <input type="radio" ng-model="search.estado_id" value=""> 
+                    <input type="checkbox" ng-model="search.check_all" ng-click="check_all_list_event()"> 
                     Todos
                 </label>
                 <label>
-                    <input type="radio" ng-model="search.estado_id" value="1"> 
+                    <input type="checkbox" ng-model="search.estado_1" ng-value="1" ng-click="check_change()">
                     Activos
                 </label>
                 <label>
-                    <input type="radio" ng-model="search.estado_id" value="2"> 
+                    <input type="checkbox" ng-model="search.estado_2" ng-value="2" ng-click="check_change()">
                     Inactivos
+                </label>
+                <label>
+                    <input type="checkbox" ng-model="search.estado_3" ng-value="3" ng-click="check_change()"> 
+                    Mal Estado
                 </label>
             </div>
             <span class="pull-right">
+                Estados: 
+                <button type="button" disabled class="btn btn-success" style="cursor: default;">
+                    Prestado
+                </button>
+                <button type="button" disabled class="btn btn-warning" style="cursor: default;">
+                    Mal Estado
+                </button>
                 Mostrando 
                 <select class="form-control" style="display: inline; width: 80px;"
                     ng-options="size as size for size in [10, 50, 100, 200, 300]" ng-model="maxSize">
@@ -44,6 +55,7 @@
                         <th sortable-header col="codigo_patrimonial">Cód. Pat.</th>
                         <th sortable-header col="movimientos[0].area.per_Area">Área</th>
                         <th sortable-header col="movimientos[0].responsable.full_name">Responsable</th>
+                        <th sortable-header col="estado.descripcion">Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -58,8 +70,9 @@
                         <td>{{ bien.modelo }}</td>
                         <td>{{ bien.serie }}</td>
                         <td>{{ bien.codigo_patrimonial }}</td>
-                        <td>{{ bien.movimientos[0].area.per_Area }}</td>
-                        <td>{{ bien.movimientos[0].persona_responsable.full_name }}</td>
+                        <td ng-class="{'bg-success': bien.movimientos[0].estado_id === 4}">{{ bien.movimientos[0].area.per_Area }}</td>
+                        <td ng-class="{'bg-success': bien.movimientos[0].estado_id === 4}">{{ bien.movimientos[0].persona_responsable.full_name }}</td>
+                        <td ng-class="{'bg-warning': bien.estado_id === 3}">{{ bien.estado.descripcion }}</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-sm" ng-click="showBienesEdit(bien.id, $event)" title="Editar"><span class="glyphicon glyphicon-pencil"></span></button>
                             <button type="button" class="btn btn-default btn-sm" ng-click="showBienesAsignar(bien.id, $event)" title="Asignar"><span class="glyphicon glyphicon-log-in"></span></button>

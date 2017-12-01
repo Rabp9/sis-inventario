@@ -12,6 +12,9 @@
         "ui-sortable": {
             "context": "tbody"
         },
+        "checklist-model": {
+            "context": "input"
+        },
         "angular-validator": {},
         "sortable-header": {
             "context": "th"

@@ -20,7 +20,8 @@ angular
     'ui.sortable',
     'scrollable-table',
     'angularValidator',
-    'ui.select'
+    'ui.select',
+    'checklist-model'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
     var mainState = {

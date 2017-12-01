@@ -24,6 +24,17 @@
                                 <input id="dtFechaInicio" type="date" class="form-control" ng-model="fecha_pre">
                             </div>
                         </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="txtEstado">Tipo de Asignación</label><br>
+                                <label>
+                                    <input id="txtEstado" type="radio" ng-model="movimiento.estado_id" ng-value="1"/> Asignación
+                                </label>
+                                <label>
+                                    <input id="txtEstado" type="radio" ng-model="movimiento.estado_id" ng-value="4"/> Préstamo
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-5">
@@ -128,6 +139,7 @@
                                             <th>F. Fin</th>
                                             <th>Área</th>
                                             <th>Responsable</th>
+                                            <th>Tipo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -138,6 +150,10 @@
                                             <td>{{ movimiento.fecha_fin }}</td>
                                             <td>{{ movimiento.area.per_Area}}</td>
                                             <td>{{ movimiento.persona_responsable.full_name }}</td>
+                                            <td>
+                                                <span ng-if="movimiento.estado_id === 1">Asignación</span>
+                                                <span></span>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

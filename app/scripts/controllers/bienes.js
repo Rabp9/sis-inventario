@@ -12,7 +12,9 @@ angular.module('sisInventarioFrontendApp')
     
     $scope.search = {};
     $scope.search.text = '';
-    $scope.search.estado_id = '1';
+    $scope.search.estado_1 = true;
+    $scope.search.estado_2 = false;
+    $scope.search.estado_3 = false;
     $scope.page = 1;
     $scope.maxSize = 10;
     
@@ -23,7 +25,9 @@ angular.module('sisInventarioFrontendApp')
             maxSize: $scope.maxSize,
             page: $scope.page,
             search: $scope.search.text,
-            estado_id: $scope.search.estado_id
+            estado_1: $scope.search.estado_1,
+            estado_2: $scope.search.estado_2,
+            estado_3: $scope.search.estado_3
         }, function (data) {
             $scope.bienes = data.bienes;
             $scope.pagination = data.pagination;
@@ -37,11 +41,11 @@ angular.module('sisInventarioFrontendApp')
         $scope.page = 1;
         $scope.getBienes();
     });
-    
-    $scope.$watch('search.estado_id', function(oldValue, newValue) {
+
+    $scope.check_change = function() {
         $scope.page = 1;
-        $scope.getBienes();
-    });
+        $scope.getBienes();        
+    };
     
     $scope.$watch('maxSize', function(newValue, oldValue) {
         $scope.page = 1;
@@ -127,4 +131,17 @@ angular.module('sisInventarioFrontendApp')
         $scope.getBienes();
     };
     
+    $scope.check_all_list_event = function() {
+        if ($scope.search.check_all) {
+            $scope.search.estado_1 = true;
+            $scope.search.estado_2 = true;
+            $scope.search.estado_3 = true;
+            $scope.getBienes();
+        } else {
+            $scope.search.estado_1 = true;
+            $scope.search.estado_2 = false;
+            $scope.search.estado_3 = false;
+            $scope.getBienes();
+        }
+    };
 });

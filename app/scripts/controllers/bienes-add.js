@@ -8,12 +8,14 @@
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-.controller('BienesAddCtrl', function ($scope, $uibModalInstance, $uibModal, BienesService, TiposService, MarcasService, $utilsViewService) {
+.controller('BienesAddCtrl', function ($scope, $uibModalInstance, $uibModal, BienesService, 
+    TiposService, MarcasService, $utilsViewService) {
     $scope.bien = {};
     $scope.bien.bien_datos = [];
     $scope.loading_tipos = 'Cargando...';
     $scope.loading_marcas = 'Cargando...';
     $scope.message = {};
+    $scope.bien.estado_id = 1;
     
     TiposService.get(function (data) {
         $scope.tipos = data.tipos;
