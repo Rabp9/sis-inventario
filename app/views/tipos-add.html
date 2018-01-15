@@ -46,8 +46,13 @@
                         <td>
                             <div class="form-group">
                                 <select class="form-control"
-                                    ng-options="option for option in ['Número', 'Texto', 'Booleano', 'Lista']" ng-model="dato.tipo_dato"
+                                    ng-options="option for option in ['Número', 'Texto', 'Booleano', 'Lista', 'Asociado']" ng-model="dato.tipo_dato"
                                     name="datoTipoDato{{ $index }}" required required-message="'Este campo es requerido'" validate-on="blur" >
+                                    <option value="">Selecciona uno</option>
+                                </select>
+                                <select class="form-control" ng-show="dato.tipo_dato === 'Asociado'"
+                                    ng-options="tipo_asociado in tipos" ng-model="dato.tipo_asociado_id"
+                                    name="datoTipoDatoAsociado{{ $index }}" required required-message="'Este campo es requerido'" validate-on="blur" >
                                     <option value="">Selecciona uno</option>
                                 </select>
                             </div>
@@ -58,6 +63,10 @@
                                 <button type="button" class="btn btn-danger" ng-click="removeDato(dato)">X</button>
                                 <button type="button" class="btn btn-default" ng-click="setDetailDato(dato, $event)"
                                     ng-show="dato.tipo_dato === 'Lista'">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                                <button type="button" class="btn btn-default" ng-click="setDetailDato(dato, $event)"
+                                    ng-show="dato.tipo_dato === 'Asociado'">
                                     <span class="glyphicon glyphicon-search"></span>
                                 </button>
                             </span>
