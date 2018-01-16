@@ -70,4 +70,26 @@ angular.module('sisInventarioFrontendApp')
             dato.estado_id = 2;
         }
     };
+    
+    $scope.setAsociado = function(dato, event) {
+        $utilsViewService.disable(event.currentTarget);
+        
+        var modalInstanceAsociado = $uibModal.open({
+            templateUrl: 'views/asociado-select.html',
+            controller: 'AsociadoSelectCtrl',
+            backdrop: false,
+            size: 'sm',
+            resolve: {
+                dato: function() {
+                    return dato;
+                }
+            }
+        });
+        
+        $utilsViewService.enable(event.currentTarget);
+        
+        modalInstanceAsociado.result.then(function (dato_asociated) {
+            dato = dato_asociated;
+        });
+    };
 });

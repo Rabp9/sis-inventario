@@ -44,10 +44,20 @@ angular.module('sisInventarioFrontendApp')
                 var tipo = data.tipo;
                 
                 angular.forEach(tipo.datos, function(value, key) {
-                    $scope.bien.bien_datos.push({
-                        dato: value,
-                        dato_id: value.id
-                    });
+                    if (value.tipo_dato === 'Asociado') {
+                        BienesService.getByTipo({tipo_id: value.tipo_asociado_id}, function(data) {
+                            $scope.bien.bien_datos.push({
+                                dato: value,
+                                dato_id: value.id,
+                                bienes_asociar: data.bienes
+                            });
+                        });
+                    } else {
+                        $scope.bien.bien_datos.push({
+                            dato: value,
+                            dato_id: value.id
+                        });
+                    }
                 });
             });
         }

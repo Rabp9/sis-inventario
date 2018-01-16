@@ -50,11 +50,6 @@
                                     name="datoTipoDato{{ $index }}" required required-message="'Este campo es requerido'" validate-on="blur" >
                                     <option value="">Selecciona uno</option>
                                 </select>
-                                <select class="form-control" ng-show="dato.tipo_dato === 'Asociado'"
-                                    ng-options="tipo_asociado in tipos" ng-model="dato.tipo_asociado_id"
-                                    name="datoTipoDatoAsociado{{ $index }}" required required-message="'Este campo es requerido'" validate-on="blur" >
-                                    <option value="">Selecciona uno</option>
-                                </select>
                             </div>
                         </td>
                         <td><input type="checkbox" ng-model="dato.unico" name="datoUnico{{ $index }}"></td>
@@ -65,7 +60,7 @@
                                     ng-show="dato.tipo_dato === 'Lista'">
                                     <span class="glyphicon glyphicon-search"></span>
                                 </button>
-                                <button type="button" class="btn btn-default" ng-click="setDetailDato(dato, $event)"
+                                <button type="button" class="btn btn-default" ng-click="setAsociado(dato, $event)"
                                     ng-show="dato.tipo_dato === 'Asociado'">
                                     <span class="glyphicon glyphicon-search"></span>
                                 </button>

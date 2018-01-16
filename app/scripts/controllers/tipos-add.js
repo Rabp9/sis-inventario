@@ -65,4 +65,26 @@ angular.module('sisInventarioFrontendApp')
         var index = $scope.tipo.datos.indexOf(dato);
         $scope.tipo.datos.splice(index, 1);
     };
+    
+    $scope.setAsociado = function(dato, event) {
+        $utilsViewService.disable(event.currentTarget);
+        
+        var modalInstanceAsociado = $uibModal.open({
+            templateUrl: 'views/asociado-select.html',
+            controller: 'AsociadoSelectCtrl',
+            backdrop: false,
+            size: 'sm',
+            resolve: {
+                dato: function() {
+                    return dato;
+                }
+            }
+        });
+        
+        $utilsViewService.enable(event.currentTarget);
+        
+        modalInstanceAsociado.result.then(function (dato_asociated) {
+            dato = dato_asociated;
+        });
+    };
 });

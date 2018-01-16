@@ -11,7 +11,7 @@
         <div class="row">
             <div class="form-group col-sm-8">
                 <label for="txtDescripcion">Descripción</label>
-                <input id="txtDescripcion" class="form-control" type="text" ng-model="bien.descripcion" focus-me="true" 
+                <input id="txtDescripcion" class="form-control" type="text" ng-model="bien.descripcion"
                     name="bienDescripcion" required required-message="'Este campo es requerido'" validate-on="blur"/> 
             </div>
             <div class="form-group col-sm-4">
@@ -90,6 +90,12 @@
                 </label>
                 <select ng-if="bien_dato.dato.tipo_dato === 'Lista'" id="bienDato{{$index}}" 
                     class="form-control" ng-options="option.descripcion as option.descripcion for option in bien_dato.dato.alternativas"
+                    ng-model="bien_dato.descripcion" name="bienDato{{$index}}">
+                    <option value="">Selecciona uno</option>
+                </select>
+                
+                <select ng-if="bien_dato.dato.tipo_dato === 'Asociado'" id="bienDato{{$index}}"
+                    class="form-control" ng-options="bien.id as bien.descripcion for bien in bien_dato.bienes_asociar"
                     ng-model="bien_dato.descripcion" name="bienDato{{$index}}">
                     <option value="">Selecciona uno</option>
                 </select>

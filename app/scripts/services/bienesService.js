@@ -21,6 +21,10 @@ angular.module('sisInventarioFrontendApp')
         darBaja: {
             method: 'POST',
             url: EnvService.getHost() + 'bienes/darBaja/.json'
+        },
+        getByTipo: {
+            method: 'GET',
+            url: EnvService.getHost() + 'bienes/getByTipo/:tipo_id.json'
         }
     });
 });
