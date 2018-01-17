@@ -34,17 +34,39 @@ angular.module('sisInventarioFrontendApp')
     
     function setDatos(datos) {
         angular.forEach(datos, function (dato, k_dato) {
-            var asignado = false;
-            angular.forEach($scope.bien.bien_datos, function (bien_dato, k_bien_dato) {
-                if (dato.id === bien_dato.dato_id) {
-                    asignado = true;
-                }
-            });
-            if (!asignado) {
-                $scope.bien.bien_datos.push({
-                    dato: dato,
-                    dato_id: dato.id
+            if (dato.tipo_dato === 'Asociado') {
+                BienesService.getByTipo({tipo_id: dato.tipo_asociado_id}, function(data) {
+                    var asignado = false;
+                    angular.forEach($scope.bien.bien_datos, function (bien_dato, k_bien_dato) {
+                        if (dato.id === bien_dato.dato_id) {
+                            asignado = true;
+                            bien_dato.bienes_asociar = data.bienes;
+                            bien_dato.descripcion = parseInt(bien_dato.descripcion);
+                        }
+                    });
+                
+                    if (!asignado) {
+                        $scope.bien.bien_datos.push({
+                            dato: dato,
+                            dato_id: dato.id,
+                            bienes_asociar: data.bienes
+                        });
+                    }
                 });
+            } else {
+                var asignado = false;
+                angular.forEach($scope.bien.bien_datos, function (bien_dato, k_bien_dato) {
+                    if (dato.id === bien_dato.dato_id) {
+                        asignado = true;
+                    }
+                });
+
+                if (!asignado) {
+                    $scope.bien.bien_datos.push({
+                        dato: dato,
+                        dato_id: dato.id
+                    });
+                }
             }
         });
     }
@@ -76,10 +98,20 @@ angular.module('sisInventarioFrontendApp')
                 var tipo = data.tipo;
                 
                 angular.forEach(tipo.datos, function(value, key) {
-                    $scope.bien.bien_datos.push({
-                        dato: value,
-                        dato_id: value.id
-                    });
+                    if (value.tipo_dato === 'Asociado') {
+                        BienesService.getByTipo({tipo_id: value.tipo_asociado_id}, function(data) {
+                            $scope.bien.bien_datos.push({
+                                dato: value,
+                                dato_id: value.id,
+                                bienes_asociar: data.bienes
+                            });
+                        });
+                    } else {
+                        $scope.bien.bien_datos.push({
+                            dato: value,
+                            dato_id: value.id
+                        });
+                    }
                 });
             });
         }
@@ -87,8 +119,6 @@ angular.module('sisInventarioFrontendApp')
     
     $scope.saveBien = function(bien, boton) {
         $utilsViewService.disable('#' + boton);
-        
-        console.log(bien);
         
         BienesService.save(bien, function(data) {
             $utilsViewService.enable('#' + boton);

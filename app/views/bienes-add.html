@@ -88,6 +88,7 @@
                     type="checkbox" ng-model="bien_dato.descripcion" name="bienDato{{$index}}" />
                     {{ bien_dato.dato.descripcion }}
                 </label>
+                
                 <select ng-if="bien_dato.dato.tipo_dato === 'Lista'" id="bienDato{{$index}}" 
                     class="form-control" ng-options="option.descripcion as option.descripcion for option in bien_dato.dato.alternativas"
                     ng-model="bien_dato.descripcion" name="bienDato{{$index}}">
