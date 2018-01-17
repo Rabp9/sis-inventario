@@ -6,7 +6,7 @@
     <div class="modal-body">
         <div class="form-group">
             <label for="txtSoftware">Software</label>
-            <input id="txtSoftware" class="form-control" type="text" ng-model="credencial.software" focus-me="true" 
+            <input id="txtSoftware" class="form-control" type="text" ng-model="credencial.software"
                 name="credencialSoftware" required required-message="'Este campo es requerido'" validate-on="blur" />
         </div>
         <div class="form-group">
@@ -16,8 +16,21 @@
         </div>
         <div class="form-group">
             <label for="txtPassword">Password</label>
-            <input id="txtPassword" class="form-control" type="text" ng-model="credencial.password" 
-                name="credencialPassword" required required-message="'Este campo es requerido'" validate-on="blur"/>
+            <div class="input-group">
+                <input id="txtPassword" class="form-control" type="{{ type_input }}" ng-model="credencial.password" 
+                    name="credencialPassword" required required-message="'Este campo es requerido'" validate-on="blur"/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" ng-click="showPassword()">
+                        <span class="glyphicon {{ icon }}"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="txtaObservaciones">Observaciones</label>
+            <textarea id="txtaObservaciones" class="form-control" type="password" ng-model="credencial.observaciones" 
+                name="credencialObservaciones" required required-message="'Este campo es requerido'" validate-on="blur">
+            </textarea>
         </div>
         <div class="form-group">
             <label>Estado</label>

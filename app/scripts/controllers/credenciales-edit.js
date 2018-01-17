@@ -9,6 +9,9 @@
  */
 angular.module('sisInventarioFrontendApp')
 .controller('CredencialesEditCtrl', function ($scope, credencial_id, $uibModalInstance, CredencialesService, $utilsViewService) {
+    $scope.icon = 'glyphicon-eye-open';
+    $scope.type_input = 'password';
+    
     var credencial = CredencialesService.get({
         id: credencial_id
     }, function() {
@@ -29,5 +32,15 @@ angular.module('sisInventarioFrontendApp')
         }, function (err) {
             $uibModalInstance.close(err.data);    
         });
+    };
+    
+    $scope.showPassword = function() {
+        if ($scope.icon === 'glyphicon-eye-open') {
+            $scope.icon = 'glyphicon-eye-close';
+            $scope.type_input = 'text';
+        } else {
+            $scope.icon = 'glyphicon-eye-open';
+            $scope.type_input = 'password';
+        }
     };
 });
