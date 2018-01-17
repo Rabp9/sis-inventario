@@ -1,7 +1,7 @@
 <form novalidate angular-validator angular-validator-submit="saveCredencial(credencial, 'btnSaveCredencial')" name="credencialEdit" angular-validator-quiet>
     <div class="modal-header">
         <button type="button" class="close" ng-click="cancel()" data-dismiss="modal" aria-hidden="true"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Modificar Página</h4>
+        <h4 class="modal-title">Modificar Credencial</h4>
     </div>
     <div class="modal-body">
         <div class="form-group">
@@ -20,7 +20,7 @@
                 <input id="txtPassword" class="form-control" type="{{ type_input }}" ng-model="credencial.password" 
                     name="credencialPassword" required required-message="'Este campo es requerido'" validate-on="blur"/>
                 <span class="input-group-btn">
-                    <button type="button" class="btn btn-primary" ng-click="showPassword()">
+                    <button type="button" class="btn btn-default" ng-click="showPassword()">
                         <span class="glyphicon {{ icon }}"></span>
                     </button>
                 </span>

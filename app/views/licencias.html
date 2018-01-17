@@ -1,0 +1,38 @@
+<div class="alert alert-dismissible" ng-class="{'alert-success': message.code === 200, 'alert-danger': message.code !== 200 }" role="alert" ng-show="message.code !== undefined">
+    <button type="button" class="close" ng-click="message.code = undefined" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {{ message.message }} 
+</div>
+<h2>Licencias</h2>
+<hr>
+<div class="row">
+    <div class="col-sm-12">
+        <button type="button" class="btn btn-primary" ng-click="showLicenciasAdd()"><span class="glyphicon glyphicon-plus"></span> Nueva Licencia</button>
+        <input class="form-control" type="search" ng-model="searchText" placeholder="Buscar...">
+        <scrollable-table watch="licencias" class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th sortable-header col="id">Código</th>
+                        <th sortable-header col="descripcion">Descripción</th>
+                        <th sortable-header col="categoria">Categoria</th>
+                        <th sortable-header col="tipo">Tipo</th>
+                        <th sortable-header col="cantidad_total">Cantidad Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-show="loading"><td colspan="6">Cargando...</td></tr>
+                    <tr ng-show="!loading && licencias.length === 0"><td colspan="6">No hay registros</td></tr>
+                    <tr ng-hide="loading" ng-class="{'danger': licencia.estado_id === 2}" ng-repeat="licencia in licencias | searchTextFilter:searchText:['estado_id']" row-id="{{ licencia.id }}">
+                        <td>{{ licencia.id }}</td>
+                        <td>{{ licencia.descripcion }}</td>
+                        <td>{{ licencia.categoria }}</td>
+                        <td>{{ licencia.tipo }}</td>
+                        <td>{{ licencia.cantidad_total }}</td>
+                        <td><button type="button" class="btn btn-primary btn-sm" ng-click="showLicenciasEdit(licencia.id)"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </scrollable-table>
+    </div>
+</div>

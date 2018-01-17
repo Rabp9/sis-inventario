@@ -21,7 +21,9 @@ angular
     'scrollable-table',
     'angularValidator',
     'ui.select',
-    'checklist-model'
+    'checklist-model',
+    'monospaced.qrcode',
+    'AngularPrint'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
     var mainState = {
@@ -60,6 +62,15 @@ angular
         title: 'Tipos'
     };
     
+    var licenciasState = {
+        name: 'licencias',
+        url: '/licencias',
+        templateUrl: 'views/licencias.html',
+        controller: 'LicenciasCtrl',
+        controllerAs: 'licencias',
+        title: 'Licencias'
+    };
+    
     var bienesState = {
         name: 'bienes',
         url: '/bienes',
@@ -69,6 +80,18 @@ angular
         title: 'Bienes'
     };
     
+    var bienesViewState = {
+        name: 'bienes-view',
+        url: '/bienes/{id}',
+        templateUrl: 'views/bienes-view.html',
+        controller: 'BienesViewCtrl',
+        controllerAs: 'bienesView',
+        params: {
+            id: {
+                value: '1'
+            }
+        }
+    };
     var registrarLoteState = {
         name: 'registrar-lote',
         url: '/registrarLote',
@@ -76,6 +99,15 @@ angular
         controller: 'RegistrarLoteCtrl',
         controllerAs: 'registrarLote',
         title: 'Registrar Lote'
+    };
+    
+    var printQrState = {
+        name: 'print-qr',
+        url: '/print-qr',
+        templateUrl: 'views/print-qr.html',
+        controller: 'PrintQrCtrl',
+        controllerAs: 'printQr',
+        title: 'Imprimir Códigos QR'
     };
     
     var movimientosState = {
@@ -100,8 +132,11 @@ angular
     $stateProvider.state(credencialesState);
     $stateProvider.state(marcasState);
     $stateProvider.state(tiposState);
+    $stateProvider.state(licenciasState);
     $stateProvider.state(bienesState);
+    $stateProvider.state(bienesViewState);
     $stateProvider.state(registrarLoteState);
+    $stateProvider.state(printQrState);
     $stateProvider.state(movimientosState);
     $stateProvider.state(busquedaState);
     $urlRouterProvider.when('', '/');

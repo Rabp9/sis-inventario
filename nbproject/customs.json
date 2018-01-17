@@ -1,5 +1,6 @@
 {
     "elements": {
+        "qrcode": {},
         "ui-view": {},
         "scrollable-table": {
             "attributes": {
@@ -12,12 +13,18 @@
         "ui-sortable": {
             "context": "tbody"
         },
+        "print-section": {
+            "context": "div"
+        },
         "checklist-model": {
             "context": "input"
         },
         "angular-validator": {},
         "sortable-header": {
             "context": "th"
+        },
+        "print-btn": {
+            "context": "button"
         },
         "ui-sref-active": {
             "context": "li"
