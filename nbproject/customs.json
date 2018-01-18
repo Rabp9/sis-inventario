@@ -2,6 +2,7 @@
     "elements": {
         "qrcode": {},
         "ui-view": {},
+        "style": {},
         "scrollable-table": {
             "attributes": {
                 "watch": {},

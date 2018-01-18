@@ -25,6 +25,10 @@ angular.module('sisInventarioFrontendApp')
         getByTipo: {
             method: 'GET',
             url: EnvService.getHost() + 'bienes/getByTipo/:tipo_id.json'
+        },
+        getBienesQr: {
+            method: 'GET',
+            url: EnvService.getHost() + 'bienes/getBienesQr.json'
         }
     });
 });

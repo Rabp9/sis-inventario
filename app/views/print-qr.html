@@ -2,12 +2,512 @@
     <button type="button" class="close" ng-click="message.code = undefined" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     {{ message.message }} 
 </div>
+<style type="text/css" media="print">
+@media print {
+    @page :first {
+        margin-top: -83px;
+        margin-left: -9px;
+        margin-bottom: -73px;
+        margin-right: 0px;
+    }
+    @page {
+        margin-left: -9px;
+        margin-right: 0px;
+        margin-top: 0px;
+        margin-bottom: -73px;
+    }
+}
+</style>
 <h2>Imprimir Códigos QR</h2>
 <hr>
-<div print-section style="border: solid 1px;">
-    dsadsa
+<div class="alert alert-dismissible" ng-class="{'alert-success': message.code === 200, 'alert-danger': message.code !== 200 }" role="alert" ng-show="message.code !== undefined">
+    <button type="button" class="close" ng-click="message.code = undefined" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {{ message.message }} 
 </div>
-<div print-section style="border: solid 1px;">
-    dsadsa
+<div class="row">
+    <div class="col-sm-12">
+        <form class="form-inline">
+            <label for="srDescripcion">Por Descripción</label>
+            <input id="srDescripcion" class="form-control" placeholder="Buscar..." ng-model="search.descripcion"/>
+            <label for="sltTipo">Por Tipo</label>
+            <div class="input-group">
+                <select id="sltTipo" class="form-control"
+                    ng-options="tipo.id as tipo.descripcion for tipo in tipos"
+                    ng-model="search.tipo_id">
+                    <option value="">{{ loading_tipos }}</option>
+                </select>
+            </div>
+            <label for="sltMarca">Por Marca</label>
+            <div class="input-group">
+                <select id="sltMarca" class="form-control"
+                    ng-options="marca.id as marca.descripcion for marca in marcas"
+                    ng-model="search.marca_id">
+                    <option value="">{{ loading_tipos }}</option>
+                </select>
+            </div>
+            <label for="srModelo">Por Modelo</label>
+            <input id="srModelo" class="form-control" placeholder="Buscar..." ng-model="search.modelo"/>
+            <label for="srSerie">Por Serie</label>
+            <input id="srSerie" class="form-control" placeholder="Buscar..." ng-model="search.serie"/>
+            <br>
+            <label for="srCodigoPat">Por Código Patrimonial</label>
+            <input id="srCodigoPat" class="form-control" placeholder="Buscar..." ng-model="search.codigo_patrimonial"/>
+            <div class="radio">
+                <label>
+                    <input type="checkbox" ng-model="search.check_all" ng-click="check_all_list_event()"> 
+                    Todos
+                </label>
+                <label>
+                    <input type="checkbox" ng-model="search.estado_1" ng-value="1" ng-click="check_change()">
+                    Activos
+                </label>
+                <label>
+                    <input type="checkbox" ng-model="search.estado_2" ng-value="2" ng-click="check_change()">
+                    Inactivos
+                </label>
+                <label>
+                    <input type="checkbox" ng-model="search.estado_3" ng-value="3" ng-click="check_change()"> 
+                    Mal Estado
+                </label>
+            </div>
+            <br>
+            <label ng-click="setSelectAreaFocus()">Área</label>
+            <ui-select focus-on="UiSelectArea" ng-model="search.area_id"
+                theme="bootstrap"
+                reset-search-input="false"
+                title="Selecciona un Área"
+                append-to-body="false">
+                <ui-select-match placeholder="Ingresa un Área...">{{$select.selected.per_Area}}</ui-select-match>
+                <ui-select-choices repeat="area.cod_Parea as area in areas track by $index"
+                    refresh="refreshAreas($select.search)"
+                    refresh-delay="0">
+                    <div ng-bind-html="area.per_Area | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+            <label ng-click="setSelectResponsableFocus()">Responsable</label>
+            <ui-select focus-on="UiSelectResponsable" ng-model="search.responsable"
+                theme="bootstrap"
+                reset-search-input="false"
+                title="Selecciona una Persona"
+                append-to-body="false">
+                <ui-select-match placeholder="Ingresa una Persona...">{{$select.selected.full_name}}</ui-select-match>
+                <ui-select-choices repeat="persona.PerCod as persona in personas track by $index"
+                    refresh="refreshPersonas($select.search)"
+                    refresh-delay="0">
+                    <div ng-bind-html="persona.full_name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+            <button class="btn btn-default" ng-click="showBienes()"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+            <button class="btn btn-primary" ng-click="showBienesPrint()"><span class="glyphicon glyphicon-print"> Imprimir</button>
+        </form>
+        <scrollable-table watch="bienes" class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th ng-style="{'width': 15}"><input type="checkbox" ng-model="check_all_bienes_list.value" ng-click="check_all_bienes_list_event()" /></th>
+                        <th sortable-header col="id">Código</th>
+                        <th sortable-header col="descripcion">Descripción</th>
+                        <th sortable-header col="tipo.descripcion">Tipo</th>
+                        <th sortable-header col="marca.descripcion">Marca</th>
+                        <th sortable-header col="modelo">Modelo</th>
+                        <th sortable-header col="serie">Serie</th>
+                        <th sortable-header col="codigo_patrimonial">Cód. Pat.</th>
+                        <th sortable-header col="movimientos[0].area.per_Area">Área</th>
+                        <th sortable-header col="movimientos[0].responsable.full_name">Responsable</th>
+                        <th sortable-header col="estado.descripcion">Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-show="loading"><td colspan="13">Cargando...</td></tr>
+                    <tr ng-show="!loading && bienes.length === 0"><td colspan="13">No hay registros</td></tr>
+                    <tr ng-hide="loading" ng-class="{'danger': bien.estado_id === 2}" ng-repeat="bien in bienes | searchTextFilter:searchText:['estado_id']" row-id="{{ bien.id }}">
+                        <td><input type="checkbox" class="bienes_selected" checklist-model="bienes_selected" checklist-value="bien.id"/></td>
+                        <td>{{ bien.id }}</td>
+                        <td>{{ bien.descripcion }}</td>
+                        <td>{{ bien.tipo.descripcion }}</td>
+                        <td>{{ bien.marca.descripcion }}</td>
+                        <td>{{ bien.modelo }}</td>
+                        <td>{{ bien.serie }}</td>
+                        <td>{{ bien.codigo_patrimonial }}</td>
+                        <td ng-class="{'bg-success': bien.movimientos[0].estado_id === 4}">{{ bien.movimientos[0].area.per_Area }}</td>
+                        <td ng-class="{'bg-success': bien.movimientos[0].estado_id === 4}">{{ bien.movimientos[0].persona_responsable.full_name }}</td>
+                        <td ng-class="{'bg-warning': bien.estado_id === 3}">{{ bien.estado.descripcion }}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm" ng-click="showBienesEdit(bien.id, $event)" title="Editar"><span class="glyphicon glyphicon-pencil"></span></button>
+                            <button type="button" class="btn btn-default btn-sm" ng-click="showBienesAsignar(bien.id, $event)" title="Asignar"><span class="glyphicon glyphicon-log-in"></span></button>
+                            <button type="button" class="btn btn-danger btn-sm" ng-click="showBienesDarBaja(bien.id, $event)" title="Dar de baja"><span class="glyphicon glyphicon-log-in"></span></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </scrollable-table>
+    </div>
+</div>
+
+<div id="dvQr" style="border: solid 1px; display: none;">
+    <div print-section style="width: 592px; height: 149px;">
+        <div>
+            <div style="width: 49%; float: left; height: 148px;">
+                <div style="padding-top: 8px; padding-left: 12px; float: left;">
+                    <qrcode data="http://172.20.1.2:8989/tmt/SISTRAMDOC/index.php" size="121"></qrcode>
+                </div>
+                <div style="float: left; text-align: center; width: 155px;;">
+                    <p style="margin: 1px;">
+                        <img style="width: 55px;" src="images/logo-qr.jpg" alt="logo-qr" >
+                    </p>
+                    <p style="margin: 1px;">
+                        <span style="font-size: 18px;">74.08.7700.0016</span>
+                    </p>
+                    <p style="margin: 1px;">
+                        <span>Computadora I5 111 dsa dsa dsa dsa sa</span>
+                    </p>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                        </tr>
+                        <tr>
+                            <td>2016</td>
+                            <td>2017</td>
+                            <td>2018</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div style="width: 2%; float: left;">
+                &nbsp;
+            </div>
+            <div style="width: 49%; float: left; height: 148px;">
+                <div style="padding-top: 8px; padding-left: 12px; float: left;">
+                    <qrcode data="http://172.20.1.2:8989/tmt/SISTRAMDOC/index.php" size="121"></qrcode>
+                </div>
+                <div style="float: left; text-align: center; width: 155px;">
+                    <p style="margin: 1px;">
+                        <img style="width: 55px;" src="images/logo-qr.jpg" alt="logo-qr" >
+                    </p>
+                    <p style="margin: 1px;">
+                        <span style="font-size: 18px;">74.08.7700.0016</span>
+                    </p>
+                    <p style="margin: 1px;">
+                        <span>Computadora I5 dsa dsa dsa das dsad sa dsadsa</span>
+                    </p>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                        </tr>
+                        <tr>
+                            <td>2016</td>
+                            <td>2017</td>
+                            <td>2018</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div print-section style="width: 592px; height: 149px;">
+        <div>
+            <div style="width: 49%; float: left; height: 148px;">
+                <div style="padding-top: 8px; padding-left: 12px; float: left;">
+                    <qrcode data="http://172.20.1.2:8989/tmt/SISTRAMDOC/index.php" size="121"></qrcode>
+                </div>
+                <div style="float: left; text-align: center; width: 155px;;">
+                    <p style="margin: 1px;">
+                        <img style="width: 55px;" src="images/logo-qr.jpg" alt="logo-qr" >
+                    </p>
+                    <p style="margin: 1px;">
+                        <span style="font-size: 18px;">74.08.7700.0016</span>
+                    </p>
+                    <p style="margin: 1px;">
+                        <span>Computadora I5 dsa dsa dsa das dsad sa dsadsa</span>
+                    </p>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                        </tr>
+                        <tr>
+                            <td>2016</td>
+                            <td>2017</td>
+                            <td>2018</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div style="width: 2%; float: left;">
+                &nbsp;
+            </div>
+            <div style="width: 49%; float: left; height: 148px;">
+                <div style="padding-top: 8px; padding-left: 12px; float: left;">
+                    <qrcode data="http://172.20.1.2:8989/tmt/SISTRAMDOC/index.php" size="121"></qrcode>
+                </div>
+                <div style="float: left; text-align: center; width: 155px;">
+                    <p style="margin: 1px;">
+                        <img style="width: 55px;" src="images/logo-qr.jpg" alt="logo-qr" >
+                    </p>
+                    <p style="margin: 1px;">
+                        <span style="font-size: 18px;">74.08.7700.0016</span>
+                    </p>
+                    <p style="margin: 1px;">
+                        <span>Computadora I5 dsa dsa dsa das dsad sa dsadsa</span>
+                    </p>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                        </tr>
+                        <tr>
+                            <td>2016</td>
+                            <td>2017</td>
+                            <td>2018</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div print-section>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    <div print-section style="width: 592px; height: 149px;">
+        <div>
+            <div style="width: 49%; float: left; height: 148px;">
+                <div style="padding-top: 8px; padding-left: 12px; float: left;">
+                    <qrcode data="http://172.20.1.2:8989/tmt/SISTRAMDOC/index.php" size="121"></qrcode>
+                </div>
+                <div style="float: left; text-align: center; width: 155px;;">
+                    <p style="margin: 1px;">
+                        <img style="width: 55px;" src="images/logo-qr.jpg" alt="logo-qr" >
+                    </p>
+                    <p style="margin: 1px;">
+                        <span style="font-size: 18px;">74.08.7700.0016</span>
+                    </p>
+                    <p style="margin: 1px;">
+                        <span>Computadora I5 dsa dsa dsa das dsad sa dsadsa</span>
+                    </p>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                        </tr>
+                        <tr>
+                            <td>2016</td>
+                            <td>2017</td>
+                            <td>2018</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div style="width: 2%; float: left;">
+                &nbsp;
+            </div>
+            <div style="width: 49%; float: left; height: 148px;">
+                <div style="padding-top: 8px; padding-left: 12px; float: left;">
+                    <qrcode data="http://172.20.1.2:8989/tmt/SISTRAMDOC/index.php" size="121"></qrcode>
+                </div>
+                <div style="float: left; text-align: center; width: 155px;">
+                    <p style="margin: 1px;">
+                        <img style="width: 55px;" src="images/logo-qr.jpg" alt="logo-qr" >
+                    </p>
+                    <p style="margin: 1px;">
+                        <span style="font-size: 18px;">74.08.7700.0016</span>
+                    </p>
+                    <p style="margin: 1px;">
+                        <span>Computadora I5 dsa dsa dsa das dsad sa dsadsa</span>
+                    </p>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                        </tr>
+                        <tr>
+                            <td>2016</td>
+                            <td>2017</td>
+                            <td>2018</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div print-section>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    <div print-section style="width: 592px; height: 149px;">
+        <div>
+            <div style="width: 49%; float: left; height: 148px;">
+                <div style="padding-top: 8px; padding-left: 12px; float: left;">
+                    <qrcode data="http://172.20.1.2:8989/tmt/SISTRAMDOC/index.php" size="121"></qrcode>
+                </div>
+                <div style="float: left; text-align: center; width: 155px;;">
+                    <p style="margin: 1px;">
+                        <img style="width: 55px;" src="images/logo-qr.jpg" alt="logo-qr" >
+                    </p>
+                    <p style="margin: 1px;">
+                        <span style="font-size: 18px;">74.08.7700.0016</span>
+                    </p>
+                    <p style="margin: 1px;">
+                        <span>Computadora I5 dsa dsa dsa das dsad sa dsadsa</span>
+                    </p>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                        </tr>
+                        <tr>
+                            <td>2016</td>
+                            <td>2017</td>
+                            <td>2018</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div style="width: 2%; float: left;">
+                &nbsp;
+            </div>
+            <div style="width: 49%; float: left; height: 148px;">
+                <div style="padding-top: 8px; padding-left: 12px; float: left;">
+                    <qrcode data="http://172.20.1.2:8989/tmt/SISTRAMDOC/index.php" size="121"></qrcode>
+                </div>
+                <div style="float: left; text-align: center; width: 155px;">
+                    <p style="margin: 1px;">
+                        <img style="width: 55px;" src="images/logo-qr.jpg" alt="logo-qr" >
+                    </p>
+                    <p style="margin: 1px;">
+                        <span style="font-size: 18px;">74.08.7700.0016</span>
+                    </p>
+                    <p style="margin: 1px;">
+                        <span>Computadora I5 dsa dsa dsa das dsad sa dsadsa</span>
+                    </p>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                        </tr>
+                        <tr>
+                            <td>2016</td>
+                            <td>2017</td>
+                            <td>2018</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div print-section>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    <div print-section style="width: 592px; height: 149px;">
+        <div>
+            <div style="width: 49%; float: left; height: 148px;">
+                <div style="padding-top: 8px; padding-left: 12px; float: left;">
+                    <qrcode data="http://172.20.1.2:8989/tmt/SISTRAMDOC/index.php" size="121"></qrcode>
+                </div>
+                <div style="float: left; text-align: center; width: 155px;;">
+                    <p style="margin: 1px;">
+                        <img style="width: 55px;" src="images/logo-qr.jpg" alt="logo-qr" >
+                    </p>
+                    <p style="margin: 1px;">
+                        <span style="font-size: 18px;">74.08.7700.0016</span>
+                    </p>
+                    <p style="margin: 1px;">
+                        <span>Computadora I5 dsa dsa dsa das dsad sa dsadsa</span>
+                    </p>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                        </tr>
+                        <tr>
+                            <td>2016</td>
+                            <td>2017</td>
+                            <td>2018</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div style="width: 2%; float: left;">
+                &nbsp;
+            </div>
+            <div style="width: 49%; float: left; height: 148px;">
+                <div style="padding-top: 8px; padding-left: 12px; float: left;">
+                    <qrcode data="http://172.20.1.2:8989/tmt/SISTRAMDOC/index.php" size="121"></qrcode>
+                </div>
+                <div style="float: left; text-align: center; width: 155px;">
+                    <p style="margin: 1px;">
+                        <img style="width: 55px;" src="images/logo-qr.jpg" alt="logo-qr" >
+                    </p>
+                    <p style="margin: 1px;">
+                        <span style="font-size: 18px;">74.08.7700.0016</span>
+                    </p>
+                    <p style="margin: 1px;">
+                        <span>Computadora I5 xxx</span>
+                    </p>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                            <td><div style="border: solid 1px; margin: 0px 10px 0px 10px;">&nbsp;</div></td>
+                        </tr>
+                        <tr>
+                            <td>2016</td>
+                            <td>2017</td>
+                            <td>2018</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <button print-btn>Doesn't matter where you put me</button>

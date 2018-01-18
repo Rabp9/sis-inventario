@@ -1,3 +1,8 @@
+.when('/print-qr-page', {
+  templateUrl: 'views/print-qr-page.html',
+  controller: 'PrintQrPageCtrl',
+  controllerAs: 'printQrPage'
+})
 'use strict';
 
 /**
