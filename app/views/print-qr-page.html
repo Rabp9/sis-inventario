@@ -21,7 +21,7 @@
             <div>
                 <div style="width: 49%; float: left; height: 148px;">
                     <div style="padding-top: 8px; padding-left: 12px; float: left;">
-                        <qrcode data="http://172.20.1.2:8989/sis-inventario/bienes/{{ bienes[$index].id }}" size="121"></qrcode>
+                        <qrcode data="http://172.20.1.2:8989/sis-inventario/#/bienes/{{ bienes[$index].id }}" size="121"></qrcode>
                     </div>
                     <div style="float: left; text-align: center; width: 155px;;">
                         <p style="margin: 1px;">
@@ -52,7 +52,7 @@
                 </div>
                 <div ng-if="bienes[$index + 1].id !== undefined" style="width: 49%; float: left; height: 148px;">
                     <div style="padding-top: 8px; padding-left: 12px; float: left;">
-                        <qrcode data="http://172.20.1.2:8989/sis-inventario/bienes/{{ bienes[$index + 1].id }}" size="121"></qrcode>
+                        <qrcode data="http://172.20.1.2:8989/sis-inventario/#/bienes/{{ bienes[$index + 1].id }}" size="121"></qrcode>
                     </div>
                     <div style="float: left; text-align: center; width: 155px;">
                         <p style="margin: 1px;">
