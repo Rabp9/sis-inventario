@@ -1,8 +1,3 @@
-.when('/print-qr-page', {
-  templateUrl: 'views/print-qr-page.html',
-  controller: 'PrintQrPageCtrl',
-  controllerAs: 'printQrPage'
-})
 'use strict';
 
 /**
@@ -133,6 +128,15 @@ angular
         title: 'Búsqueda'
     };
     
+    var printQrPageState = {
+        name: 'printQrPageState',
+        url: '/print-qr-page/:codigos',
+        templateUrl: 'views/print-qr-page.html',
+        controller: 'PrintQrPageCtrl',
+        controllerAs: 'printQrPage',
+        title: 'Impresión de Códigos Qr'
+    };
+    
     $stateProvider.state(mainState);
     $stateProvider.state(credencialesState);
     $stateProvider.state(marcasState);
@@ -142,6 +146,7 @@ angular
     $stateProvider.state(bienesViewState);
     $stateProvider.state(registrarLoteState);
     $stateProvider.state(printQrState);
+    $stateProvider.state(printQrPageState);
     $stateProvider.state(movimientosState);
     $stateProvider.state(busquedaState);
     $urlRouterProvider.when('', '/');

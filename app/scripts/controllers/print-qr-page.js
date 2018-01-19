@@ -8,10 +8,22 @@
  * Controller of the sisInventarioFrontendApp
  */
 angular.module('sisInventarioFrontendApp')
-  .controller('PrintQrPageCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+.controller('PrintQrPageCtrl', function ($scope, $stateParams, BienesService, $window, $timeout) {
+    $scope.getBienes = function() {
+        BienesService.getByIds({ids: $stateParams.codigos}, function(data) {
+            $scope.bienes = data.bienes;
+            $timeout(function() {
+                $window.print();
+            }, 1);
+            $timeout(function() {
+                $window.close();
+            }, 1);
+        });
+    };
+    
+    $scope.init = function() {
+        $scope.getBienes();
+    };
+    
+    $scope.init();
+});

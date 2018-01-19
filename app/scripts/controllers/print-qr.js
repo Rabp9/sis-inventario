@@ -9,7 +9,7 @@
  */
 angular.module('sisInventarioFrontendApp')
 .controller('PrintQrCtrl', function ($scope, BienesService, AreasService, PersonasService,
-    TiposService, MarcasService) {
+    TiposService, MarcasService, $state) {
     
     $scope.search = {};
     $scope.search.text = '';
@@ -102,7 +102,7 @@ angular.module('sisInventarioFrontendApp')
     };
    
     $scope.showBienesPrint = function() {
-        $('#dvQr').css('display', 'block'); 
-        window.print();
+        var url = $state.href('printQrPageState', {codigos: $scope.bienes_selected});
+        window.open(url,'_blank');
     };
 });

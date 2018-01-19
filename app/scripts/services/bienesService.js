@@ -29,6 +29,10 @@ angular.module('sisInventarioFrontendApp')
         getBienesQr: {
             method: 'GET',
             url: EnvService.getHost() + 'bienes/getBienesQr.json'
+        },
+        getByIds: {
+            method: 'GET',
+            url: EnvService.getHost() + 'bienes/getByIds/:ids.json'
         }
     });
 });
